@@ -8,8 +8,9 @@ const ThemeProvider = ({ children, ...props }) => {
   const [isDark, setIsDark] = useState(false);
 
   const onThemeChange = () => {
-    console.log("Mode IsDark  ", isDark);
     setIsDark(!isDark);
+    const htmDoc = document.querySelector("html").classList;
+    htmDoc.toggle("dark");
   };
 
   return (

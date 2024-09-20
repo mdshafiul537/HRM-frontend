@@ -9,7 +9,7 @@ const Root = () => {
   return (
     <Layout>
       <HRHeader />
-      <Content>
+      <Content className="min-h-screen">
         <Outlet></Outlet>
       </Content>
       <HRFooter />

@@ -2,13 +2,14 @@ import React from "react";
 
 import notFoundFile from "../assets/lottie/not-founs-404.json";
 import Lottie from "lottie-react";
-import HRHeader from "../Components/Layout/HRHeader";
-import HRFooter from "../Components/Layout/HRFooter";
+import DashboardMenu from "../Components/Dashboard/DashboardMenu";
 
-const Error404Page = () => {
+const DashboardError404Page = () => {
   return (
     <>
-      <HRHeader />
+      <div className="py-6 px-2 shadow-2xl">
+        <DashboardMenu />
+      </div>
       <section>
         <div className="w-full min-h-screen flex justify-center items-center">
           <div className="card-body text-center w-full h-3/4">
@@ -28,9 +29,8 @@ const Error404Page = () => {
           </div>
         </div>
       </section>
-      <HRFooter />
     </>
   );
 };
 
-export default Error404Page;
+export default DashboardError404Page;

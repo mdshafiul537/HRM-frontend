@@ -16,7 +16,7 @@ const { Header } = Layout;
 const HRHeader = () => {
   const { isDark, onThemeChange } = useContext(ThemeContext);
 
-  const [current, setCurrent] = useState("mail");
+  const [current, setCurrent] = useState("home");
   const onMenuClick = (e) => {
     setCurrent(e.key);
   };
@@ -32,8 +32,8 @@ const HRHeader = () => {
     },
 
     {
-      label: <NavLink to="/dashboard">Dashboard</NavLink>,
-      key: "dashboard",
+      label: <NavLink to="/administrator">Dashboard</NavLink>,
+      key: "administrator",
     },
 
     {
@@ -51,10 +51,10 @@ const HRHeader = () => {
   ];
 
   return (
-    <Header className="w-full bg-slate-700 shadow-md text-white">
+    <Header className="w-full shadow-lg text-gray-700 bg-white dark:bg-gray-900">
       <Col span={24}>
         <Row>
-          <Col span={4}>
+          <Col span={2}>
             <div>
               {" "}
               <AppstoreAddOutlined />
@@ -62,12 +62,23 @@ const HRHeader = () => {
           </Col>
           <Col span={20}>
             <Menu
-              className="w-full bg-slate-700 text-white font-bold"
+              className="w-full font-bold dark:bg-gray-900"
               onClick={onMenuClick}
               selectedKeys={[current]}
               mode="horizontal"
               items={items}
+              theme={isDark ? "dark" : "light"}
             />
+          </Col>
+          <Col span={2}>
+            <div className="w-full flex h-full items-center">
+              <div
+                className="text-xl h-8 w-8 rounded-full bg-gray-800 text-white flex flex-col justify-center items-center cursor-pointer "
+                onClick={onThemeChange}
+              >
+                {isDark ? <SunOutlined className="" /> : <MoonOutlined />}
+              </div>
+            </div>
           </Col>
         </Row>
       </Col>

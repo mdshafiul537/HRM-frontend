@@ -5,6 +5,7 @@ import ContextWrapper from "./Context/ContextWrapper";
 import { RouterProvider } from "react-router-dom";
 import router from "./Routers/routers";
 
+import "react-toastify/dist/ReactToastify.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

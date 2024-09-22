@@ -9,12 +9,12 @@ import WorkSheetPage from "../pages/workSheet";
 import PaymentHistoryPage from "../pages/paymentHistoryPage";
 import TaskAddPage from "../pages/taskAddPage";
 import AllTaskPage from "../pages/allTaskPage";
-import TaskProgressPage from "../pages/taskProgressPage";
 import UsersPage from "../pages/usersPage";
 import AdminUsersPage from "../pages/adminUsersPage";
 import WorkProgressPage from "../pages/workProgressPage";
 import WorkCheckedPage from "../pages/workCheckedPage";
 import PaidAddPage from "../pages/paidAddPage";
+import { getAllTask } from "../utils/apiAction";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +57,9 @@ const router = createBrowserRouter([
           {
             path: "/administrator/tasks",
             element: <AllTaskPage />,
+            loader: async () => {
+              return await getAllTask();
+            },
           },
 
           {

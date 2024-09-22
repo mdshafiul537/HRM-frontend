@@ -1,6 +1,5 @@
 import axios from "axios";
 
-import { isEmptyOrNull } from "./helper";
 import { REQUEST_HEADER } from "./types";
 
 axios.defaults.withCredentials = true;
@@ -45,5 +44,21 @@ export const addUserUsingAPI = async (user) => {
     return resp.data;
   } catch (error) {
     console.log("User Added Error,", error);
+  }
+};
+
+export const addTaskAction = async (task) => {
+  const resp = await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, task);
+
+  return resp.data;
+};
+
+export const getAllTask = async () => {
+  try {
+    const resp = await axios.get(`${import.meta.env.VITE_API_URL}/tasks`);
+
+    return resp.data;
+  } catch (error) {
+    console.log("Get All Task Error ", error);
   }
 };

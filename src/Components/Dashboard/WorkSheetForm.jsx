@@ -11,10 +11,18 @@ import {
   Col,
 } from "antd";
 
-const WorkSheetForm = () => {
+const WorkSheetForm = ({
+  onSubmit,
+  initValues,
+  initForm,
+  onFailed,
+  name = "Add",
+  ...props
+}) => {
   return (
     <Card className="w-full shadow-md" title="Work Sheet">
       <Form
+        form={initForm}
         labelCol={{
           span: 8,
         }}
@@ -22,7 +30,9 @@ const WorkSheetForm = () => {
           span: 14,
         }}
         layout="horizontal"
-        initialValues={{}}
+        initialValues={initValues}
+        onFinish={onSubmit}
+        onFinishFailed={onFailed}
       >
         <Row>
           <Col span={7}>
@@ -40,16 +50,19 @@ const WorkSheetForm = () => {
               <InputNumber className="w-full" />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item label="DatePicker" name="datePicker">
+          <Col span={7}>
+            <Form.Item label="Date" name="date">
               <DatePicker />
             </Form.Item>
           </Col>
 
-          <Col span={3}>
-            <Form.Item>
-              <Button>Add</Button>
-            </Form.Item>
+          <Col span={4}>
+            <button
+              htmlFor="submit"
+              className="h-8 py-1 w-full font-semibold bg-green-500 dark:bg-green-700 dark:shadow-lg dark:hover:border-green-400 rounded"
+            >
+              {name}
+            </button>
           </Col>
         </Row>
       </Form>

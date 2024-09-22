@@ -12,6 +12,7 @@ import AllTaskPage from "../pages/allTaskPage";
 import TaskProgressPage from "../pages/taskProgressPage";
 import UsersPage from "../pages/usersPage";
 import AdminUsersPage from "../pages/adminUsersPage";
+import WorkProgressPage from "../pages/workProgressPage";
 
 const router = createBrowserRouter([
   {
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/administrator/progress",
-            element: <TaskProgressPage />,
+            element: <WorkProgressPage />,
           },
 
           {

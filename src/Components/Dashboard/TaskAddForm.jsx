@@ -42,46 +42,8 @@ const TaskAddForm = ({
         <Input className="w-full" placeholder="Task Title" />
       </Form.Item>
 
-      <Form.Item
-        label="Category"
-        name={"category"}
-        className="w-full"
-        rules={[{ require: true, message: "Please select one category" }]}
-      >
-        <Select>
-          <Select.Option value="Sales">Sales</Select.Option>
-          <Select.Option value="Support">Support</Select.Option>
-          <Select.Option value="Content">Content</Select.Option>
-          <Select.Option value="Paper-work">Paper-work</Select.Option>
-        </Select>
-      </Form.Item>
-
       <Form.Item label="Description" name={"description"} className="w-full">
         <TextArea placeholder="" />
-      </Form.Item>
-
-      <Form.Item
-        label="Start In"
-        name={"startDate"}
-        rules={[{ require: true, message: "Please, Enter work Start Date" }]}
-      >
-        <DatePicker disabled={isUpdate} placeholder="Start" />
-      </Form.Item>
-
-      <Form.Item
-        label="Complete"
-        name="completeDate"
-        rules={[{ require: true, message: "Please, Enter work Complete Date" }]}
-      >
-        <DatePicker disabled={!isUpdate} />
-      </Form.Item>
-
-      <Form.Item
-        label="Due Date"
-        name="dueDate"
-        rules={[{ require: true, message: "Please, Enter work Due Date" }]}
-      >
-        <DatePicker />
       </Form.Item>
 
       <Form.Item label="Employee" name={"employee"} className="w-full">
@@ -93,7 +55,7 @@ const TaskAddForm = ({
           htmlType="submit"
           className="h-9 bg-green-600 text-lg font-semibold dark:bg-green-700 text-white"
         >
-          {isUpdate ? "Update" : "Add"}
+          {isUpdate ? "Update" : "Add Task"}
         </Button>
       </Form.Item>
     </Form>

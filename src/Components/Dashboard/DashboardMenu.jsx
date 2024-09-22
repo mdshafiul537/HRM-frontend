@@ -18,7 +18,25 @@ const items = [
   {
     key: "work-sheet",
     icon: <FileDoneOutlined />,
-    label: <NavLink to="/administrator/work-sheet">Work Sheet</NavLink>,
+    label: <span>Work</span>,
+    children: [
+      {
+        key: "list-add",
+
+        icon: <i className="fa-solid fa-list-check"></i>,
+        label: <NavLink to="/administrator/work-sheet">Work Sheet</NavLink>,
+      },
+      {
+        key: "progress",
+        icon: <FileUnknownOutlined />,
+        label: <NavLink to="/administrator/progress">Progress</NavLink>,
+      },
+      {
+        key: "tasks",
+        icon: <FileDoneOutlined />,
+        label: <NavLink to="/administrator/tasks">Complete</NavLink>,
+      },
+    ],
   },
 
   {
@@ -33,28 +51,6 @@ const items = [
         label: (
           <NavLink to="/administrator/payment-history">Payment History</NavLink>
         ),
-      },
-    ],
-  },
-  {
-    key: "task",
-    label: "Task",
-    icon: <ReconciliationOutlined />,
-    children: [
-      {
-        key: "tasks-add",
-        icon: <FileAddOutlined />,
-        label: <NavLink to="/administrator/tasks-add">Add</NavLink>,
-      },
-      {
-        key: "progress",
-        icon: <FileUnknownOutlined />,
-        label: <NavLink to="/administrator/progress">Progress</NavLink>,
-      },
-      {
-        key: "tasks",
-        icon: <FileDoneOutlined />,
-        label: <NavLink to="/administrator/tasks">Complete</NavLink>,
       },
     ],
   },
@@ -75,6 +71,25 @@ const items = [
         label: (
           <NavLink to="/administrator/all-employee-list">All Employee</NavLink>
         ),
+      },
+    ],
+  },
+  {
+    key: "Task",
+    icon: <i className="fa-solid fa-cubes-stacked"></i>,
+    label: <span>Task</span>,
+    children: [
+      {
+        key: "task-add",
+
+        icon: <i className="fa-solid fa-file-pen"></i>,
+        label: <NavLink to="/administrator/tasks-add">Add</NavLink>,
+      },
+
+      {
+        key: "tasks",
+        icon: <i className="fa-solid fa-list"></i>,
+        label: <NavLink to="/administrator/tasks">All Task</NavLink>,
       },
     ],
   },

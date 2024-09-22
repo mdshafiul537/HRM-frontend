@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
+  FileUnknownOutlined,
+  FileAddOutlined,
+  ReconciliationOutlined,
+  FileDoneOutlined,
   MailOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -15,26 +16,64 @@ import { Button, Menu } from "antd";
 
 const items = [
   {
-    key: "users",
-    icon: <PieChartOutlined />,
-    label: <NavLink to="/administrator/users">User</NavLink>,
-  },
-
-  {
     key: "work-sheet",
-    icon: <DesktopOutlined />,
-    label: <NavLink to="/administrator/work-sheet">User</NavLink>,
+    icon: <FileDoneOutlined />,
+    label: <NavLink to="/administrator/work-sheet">Work Sheet</NavLink>,
   },
 
   {
     key: "payment",
     label: "Payment",
-    icon: <MailOutlined />,
+    icon: <i className="fa-solid fa-file-invoice-dollar"></i>,
     children: [
       {
         key: "payment-history",
+
+        icon: <i className="fa-solid fa-list-check"></i>,
         label: (
           <NavLink to="/administrator/payment-history">Payment History</NavLink>
+        ),
+      },
+    ],
+  },
+  {
+    key: "task",
+    label: "Task",
+    icon: <ReconciliationOutlined />,
+    children: [
+      {
+        key: "tasks-add",
+        icon: <FileAddOutlined />,
+        label: <NavLink to="/administrator/tasks-add">Add</NavLink>,
+      },
+      {
+        key: "progress",
+        icon: <FileUnknownOutlined />,
+        label: <NavLink to="/administrator/progress">Progress</NavLink>,
+      },
+      {
+        key: "tasks",
+        icon: <FileDoneOutlined />,
+        label: <NavLink to="/administrator/tasks">Complete</NavLink>,
+      },
+    ],
+  },
+
+  {
+    key: "user",
+    icon: <i className="fa-solid fa-user-tie"></i>,
+    label: "User",
+    children: [
+      {
+        key: "employees",
+        icon: <i className="fa-solid fa-users"></i>,
+        label: <NavLink to="/administrator/employee-list">Employees</NavLink>,
+      },
+      {
+        key: "all-employee",
+        icon: <i className="fa-solid fa-users"></i>,
+        label: (
+          <NavLink to="/administrator/all-employee-list">All Employee</NavLink>
         ),
       },
     ],
@@ -48,7 +87,7 @@ const DashboardMenu = () => {
   };
 
   return (
-    <div className="py-6 px-2 shadow-2xl dark:bg-gray-900 my-1">
+    <div className="py-6 px-2 text-2xl font-semibold w-full">
       <Button
         type="primary"
         onClick={toggleCollapsed}

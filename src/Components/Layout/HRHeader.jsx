@@ -51,38 +51,36 @@ const HRHeader = () => {
   ];
 
   return (
-    <Header className="w-full shadow-lg text-gray-700 bg-white dark:bg-gray-900">
-      <Col span={24}>
-        <Row>
-          <Col span={2}>
-            <div>
-              {" "}
-              <AppstoreAddOutlined />
+    <Col span={24}>
+      <Row>
+        <Col span={2}>
+          <div>
+            {" "}
+            <AppstoreAddOutlined />
+          </div>
+        </Col>
+        <Col span={20}>
+          <Menu
+            className="w-full font-bold dark:bg-gray-900"
+            onClick={onMenuClick}
+            selectedKeys={[current]}
+            mode="horizontal"
+            items={items}
+            theme={isDark ? "dark" : "light"}
+          />
+        </Col>
+        <Col span={2}>
+          <div className="w-full flex h-full items-center">
+            <div
+              className="text-xl h-8 w-8 rounded-full bg-gray-800 text-white flex flex-col justify-center items-center cursor-pointer "
+              onClick={onThemeChange}
+            >
+              {isDark ? <SunOutlined className="" /> : <MoonOutlined />}
             </div>
-          </Col>
-          <Col span={20}>
-            <Menu
-              className="w-full font-bold dark:bg-gray-900"
-              onClick={onMenuClick}
-              selectedKeys={[current]}
-              mode="horizontal"
-              items={items}
-              theme={isDark ? "dark" : "light"}
-            />
-          </Col>
-          <Col span={2}>
-            <div className="w-full flex h-full items-center">
-              <div
-                className="text-xl h-8 w-8 rounded-full bg-gray-800 text-white flex flex-col justify-center items-center cursor-pointer "
-                onClick={onThemeChange}
-              >
-                {isDark ? <SunOutlined className="" /> : <MoonOutlined />}
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Col>
-    </Header>
+          </div>
+        </Col>
+      </Row>
+    </Col>
   );
 };
 

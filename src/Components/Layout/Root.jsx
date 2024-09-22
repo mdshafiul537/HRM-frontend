@@ -1,18 +1,24 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-import HRHeader from "./HRHeader";
 import { Breadcrumb, Layout } from "antd";
 import HRFooter from "./HRFooter";
-const { Content } = Layout;
+
+import HRHeader from "./HRHeader";
+const { Header, Content, Footer } = Layout;
 const Root = () => {
   return (
     <Layout>
-      <HRHeader />
-      <Content className="min-h-screen">
+      <Header className="w-full shadow-lg text-gray-700 bg-white dark:bg-gray-900">
+        <HRHeader />
+      </Header>
+
+      <Content className="min-h-screen w-full">
         <Outlet></Outlet>
       </Content>
-      <HRFooter />
+      <Footer>
+        <HRFooter />
+      </Footer>
     </Layout>
   );
 };

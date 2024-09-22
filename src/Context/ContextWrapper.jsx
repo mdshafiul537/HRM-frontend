@@ -1,11 +1,14 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import ThemeProvider from "./ThemeProvider";
+import AuthProvider from "./AuthProvider";
 
 const ContextWrapper = ({ children, ...props }) => {
   return (
     <React.Fragment {...props}>
-      <ThemeProvider>{children}</ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>{children}</ThemeProvider>
+      </AuthProvider>
     </React.Fragment>
   );
 };

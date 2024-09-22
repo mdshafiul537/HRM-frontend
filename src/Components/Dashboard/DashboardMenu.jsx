@@ -32,9 +32,9 @@ const items = [
         label: <NavLink to="/administrator/progress">Progress</NavLink>,
       },
       {
-        key: "tasks",
+        key: "work-sheets",
         icon: <FileDoneOutlined />,
-        label: <NavLink to="/administrator/tasks">Complete</NavLink>,
+        label: <NavLink to="/administrator/work-sheets">Complete</NavLink>,
       },
     ],
   },

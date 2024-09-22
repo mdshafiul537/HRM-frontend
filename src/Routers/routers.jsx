@@ -13,6 +13,8 @@ import TaskProgressPage from "../pages/taskProgressPage";
 import UsersPage from "../pages/usersPage";
 import AdminUsersPage from "../pages/adminUsersPage";
 import WorkProgressPage from "../pages/workProgressPage";
+import WorkCheckedPage from "../pages/workCheckedPage";
+import PaidAddPage from "../pages/paidAddPage";
 
 const router = createBrowserRouter([
   {
@@ -27,10 +29,26 @@ const router = createBrowserRouter([
         element: <DashboardPage />,
         errorElement: <DashboardError404Page />,
         children: [
-          { path: "/administrator/work-sheet", element: <WorkSheetPage /> },
+          {
+            path: "/administrator/work-sheet",
+            element: <WorkSheetPage />,
+          },
+          {
+            path: "/administrator/progress",
+            element: <WorkProgressPage />,
+          },
+          {
+            path: "/administrator/work-sheets",
+            element: <WorkCheckedPage />,
+          },
+
           {
             path: "/administrator/payment-history",
             element: <PaymentHistoryPage />,
+          },
+          {
+            path: "/administrator/payment-add",
+            element: <PaidAddPage />,
           },
           {
             path: "/administrator/tasks-add",
@@ -39,10 +57,6 @@ const router = createBrowserRouter([
           {
             path: "/administrator/tasks",
             element: <AllTaskPage />,
-          },
-          {
-            path: "/administrator/progress",
-            element: <WorkProgressPage />,
           },
 
           {

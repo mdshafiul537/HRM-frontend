@@ -14,7 +14,7 @@ import AdminUsersPage from "../pages/adminUsersPage";
 import WorkProgressPage from "../pages/workProgressPage";
 import WorkCheckedPage from "../pages/workCheckedPage";
 import PaidAddPage from "../pages/paidAddPage";
-import { getAllTask } from "../utils/apiAction";
+import { getAllTask, getWorkSheet } from "../utils/apiAction";
 
 const router = createBrowserRouter([
   {
@@ -32,14 +32,23 @@ const router = createBrowserRouter([
           {
             path: "/administrator/work-sheet",
             element: <WorkSheetPage />,
+            loader: async () => {
+              return await getAllTask();
+            },
           },
           {
             path: "/administrator/progress",
             element: <WorkProgressPage />,
+            loader: async () => {
+              return getWorkSheet();
+            },
           },
           {
             path: "/administrator/work-sheets",
             element: <WorkCheckedPage />,
+            loader: async () => {
+              return getWorkSheet();
+            },
           },
 
           {

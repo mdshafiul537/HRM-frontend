@@ -1,7 +1,7 @@
 import { Card, Col, Row, Table } from "antd";
 import React from "react";
 import WorkSearch from "../Components/Dashboard/WorkSearch";
-import { workSheetColumns } from "../utils/cols/workSheetColumn";
+import { workSheetStatusColumns } from "../utils/cols/workSheetColumn";
 
 const WorkCheckedPage = () => {
   const onSearchAction = (query) => {
@@ -17,7 +17,7 @@ const WorkCheckedPage = () => {
             title="Cheked Work Sheet"
             extra={<WorkSearch onSearch={onSearchAction} />}
           >
-            <Table dataSource={[]} columns={workSheetColumns()} />
+            <Table dataSource={[]} columns={workSheetStatusColumns()} />
           </Card>
         </Col>
       </Row>

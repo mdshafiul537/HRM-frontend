@@ -62,3 +62,37 @@ export const getAllTask = async () => {
     console.log("Get All Task Error ", error);
   }
 };
+
+export const addWorkSheetItem = async (work) => {
+  try {
+    const resp = await axios.post(
+      `${import.meta.env.VITE_API_URL}/work-sheets`,
+      work
+    );
+    return resp.data;
+  } catch (error) {
+    console.log("Add Work To Shhet Error ", error);
+    return error;
+  }
+};
+
+export const getWorkSheet = async () => {
+  try {
+    const resp = await axios.get(`${import.meta.env.VITE_API_URL}/work-sheets`);
+    return resp.data;
+  } catch (error) {
+    console.log("Add Work To Shhet Error ", error);
+    return error;
+  }
+};
+
+export const getWorkSheetByQuery = async (query) => {
+  try {
+    const resp = await axios.get(
+      `${import.meta.env.VITE_API_URL}/work-sheets/query`
+    );
+    return resp.data;
+  } catch (error) {
+    return error;
+  }
+};

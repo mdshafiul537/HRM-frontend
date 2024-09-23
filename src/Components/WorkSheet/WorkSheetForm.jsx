@@ -16,6 +16,7 @@ const WorkSheetForm = ({
   initValues,
   initForm,
   onFailed,
+  tasks = [],
   name = "Add",
   ...props
 }) => {
@@ -38,10 +39,13 @@ const WorkSheetForm = ({
           <Col span={7}>
             <Form.Item label="Task" name={"task"} className="w-full">
               <Select>
-                <Select.Option value="Sales">Sales</Select.Option>
-                <Select.Option value="Support">Support</Select.Option>
-                <Select.Option value="Content">Content</Select.Option>
-                <Select.Option value="Paper-work">Paper-work</Select.Option>
+                {tasks?.map((task) => {
+                  return (
+                    <Select.Option value={task?.title}>
+                      {task?.title}
+                    </Select.Option>
+                  );
+                })}
               </Select>
             </Form.Item>
           </Col>

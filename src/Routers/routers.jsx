@@ -14,7 +14,14 @@ import AdminUsersPage from "../pages/adminUsersPage";
 import WorkProgressPage from "../pages/workProgressPage";
 import WorkCheckedPage from "../pages/workCheckedPage";
 import PaidAddPage from "../pages/paidAddPage";
-import { getAllTask, getWorkSheet } from "../utils/apiAction";
+import {
+  getAllTask,
+  getAllUser,
+  getUser,
+  getWorkSheet,
+} from "../utils/apiAction";
+import { LoginPage } from "../pages/login";
+import AdminUserPage from "../pages/adminUserPage";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +31,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/register", element: <RegisterPage /> },
+      { path: "/login", element: <LoginPage /> },
       {
         path: "/administrator",
         element: <DashboardPage />,
@@ -74,11 +82,25 @@ const router = createBrowserRouter([
           {
             path: "/administrator/employee-list",
             element: <UsersPage />,
+            loader: async () => {
+              return await getAllUser();
+            },
+          },
+
+          {
+            path: "/administrator/employee-list/details/:id",
+            element: <AdminUserPage />,
+            loader: async ({ params }) => {
+              return await getUser(params.id);
+            },
           },
 
           {
             path: "/administrator/all-employee-list",
             element: <AdminUsersPage />,
+            loader: async () => {
+              return await getAllUser();
+            },
           },
         ],
       },

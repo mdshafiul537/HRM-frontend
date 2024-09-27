@@ -1,3 +1,6 @@
+import { FileDoneOutlined } from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
+
 export const employeeCols = [
   {
     title: "Name",
@@ -32,8 +35,20 @@ export const employeeCols = [
   },
   {
     title: "Details",
-    dataIndex: "Details",
-    key: "Details",
+    dataIndex: "_id",
+    key: "_id",
+    render: (id) => {
+      return (
+        <span>
+          <NavLink
+            className="text-xl"
+            to={`/administrator/employee-list/details/${id}`}
+          >
+            <FileDoneOutlined />
+          </NavLink>
+        </span>
+      );
+    },
   },
 ];
 
@@ -46,7 +61,7 @@ export const employeeAdminCols = [
   {
     title: "Designation",
     dataIndex: "designation",
-    key: "designationme",
+    key: "designation",
   },
   {
     title: "Make HR",
@@ -62,7 +77,19 @@ export const employeeAdminCols = [
 
   {
     title: "Details",
-    dataIndex: "Details",
-    key: "Details",
+    dataIndex: "_id",
+    key: "_id",
+    render: (id) => {
+      return (
+        <span>
+          <NavLink
+            className="text-xl"
+            to={`/administrator/employee-list/details/${id}`}
+          >
+            <FileDoneOutlined />
+          </NavLink>
+        </span>
+      );
+    },
   },
 ];

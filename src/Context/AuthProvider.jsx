@@ -3,6 +3,7 @@ import React, { createContext, useEffect, useState } from "react";
 
 import {
   createUserWithEmailAndPassword,
+  getAdditionalUserInfo,
   getAuth,
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -17,7 +18,13 @@ import {
 import { isEmptyOrNull, onNotifyError, onNotifySuccess } from "../utils/helper";
 
 import fireBaseApp from "../config/firebase-config";
-import { addUserUsingAPI, getAccessToken, getSignOut } from "../utils/apiAction";
+import {
+  addUserUsingAPI,
+  createNewLoginUserUsingAPI,
+  createUserViaAPI,
+  getAccessToken,
+  getSignOut,
+} from "../utils/apiAction";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children, ...props }) => {
@@ -52,30 +59,20 @@ const AuthProvider = ({ children, ...props }) => {
       });
   };
 
-  const createUser = (
-    { email, password, name, photoURL },
-    callBack = () => {}
-  ) => {
+  const createUser = (user, callBack = () => {}) => {
     setIsLoading(true);
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(({ user, ...props }) => {
+    const { email, password, name, photo } = user;
+
+    createUserWithEmailAndPassword(auth, user.email, user.password)
+      .then(({ nUser, ...props }) => {
         onNotifySuccess("Registration successful");
 
-        let url = user.photoURL;
-        if (!isEmptyOrNull(user.photoURL)) {
-          url = photoURL;
+        if (isEmptyOrNull(photo)) {
+          user.photo = nUser.photoURL;
         }
 
-        const { email, photoURL, emailVerified, uid, phoneNumber } = user;
-        addUserUsingAPI({
-          displayName: name,
-          email,
-          photoURL,
-          emailVerified,
-          uid,
-          phoneNumber,
-        });
+        createUserViaAPI(user);
 
         updateProfile(user, { displayName: name, photoURL: url })
           .then((update) => {
@@ -107,8 +104,13 @@ const AuthProvider = ({ children, ...props }) => {
     setIsLoading(true);
 
     signInWithPopup(auth, googleProvider)
-      .then(({ user, _tokenResponse, ...props }) => {
-        onNotifySuccess(`${user.displayName} you are login`);
+      .then((result) => {
+        const userInfo = getAdditionalUserInfo(result);
+        if (userInfo.isNewUser) {
+          createNewLoginUserUsingAPI(userInfo.profile);
+        }
+        onNotifySuccess(`${userInfo?.profile?.name} you are login`);
+
         callBack();
       })
       .catch((error) => {
@@ -120,8 +122,16 @@ const AuthProvider = ({ children, ...props }) => {
     setIsLoading(true);
 
     signInWithPopup(auth, gitHubProvider)
-      .then(({ user, _tokenResponse, ...props }) => {
+      .then((result) => {
+        const userInfo = getAdditionalUserInfo(result);
+        const { user } = result;
+
+        if (userInfo.isNewUser) {
+          createNewLoginUserUsingAPI(userInfo.profile);
+        }
+
         onNotifySuccess(`${user.displayName} you are login`);
+
         callBack();
       })
       .catch((error) => {

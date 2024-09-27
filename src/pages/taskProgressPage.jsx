@@ -1,6 +1,5 @@
 import { Card, Col, Row, Table } from "antd";
 import React, { useState } from "react";
-import { paymentCols } from "../utils/cols/paymentCols";
 import { taskCols } from "../utils/cols/taskCols";
 
 const TaskProgressPage = () => {

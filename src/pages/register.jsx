@@ -38,6 +38,7 @@ const RegisterPage = () => {
   const { createUser } = useContext(AuthContext);
 
   const onSubmit = (data) => {
+    console.log("RegisterPage data, ", data);
     if (!isEmptyOrNull({ data })) {
       createUser(data, () => {
         navigate("/login");

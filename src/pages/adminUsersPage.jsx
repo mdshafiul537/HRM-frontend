@@ -17,8 +17,6 @@ const AdminUsersPage = () => {
     }
   }, [respUser]);
 
-  console.log("Reponse employees, respUser, ", respUser);
-  console.log("Reponse employees, ", employees);
   return (
     <>
       <div className="w-full">

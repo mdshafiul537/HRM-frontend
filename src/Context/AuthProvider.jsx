@@ -59,22 +59,22 @@ const AuthProvider = ({ children, ...props }) => {
       });
   };
 
-  const createUser = (user, callBack = () => {}) => {
+  const createUser = (nUser, callBack = () => {}) => {
     setIsLoading(true);
 
-    const { email, password, name, photo } = user;
+    const { email, password, name, picture } = nUser;
 
-    createUserWithEmailAndPassword(auth, user.email, user.password)
-      .then(({ nUser, ...props }) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(({ user, ...props }) => {
         onNotifySuccess("Registration successful");
 
-        if (isEmptyOrNull(photo)) {
-          user.photo = nUser.photoURL;
+        if (isEmptyOrNull(picture)) {
+          nUser.picture = user.photoURL;
         }
 
-        createUserViaAPI(user);
+        createUserViaAPI(nUser);
 
-        updateProfile(user, { displayName: name, photoURL: url })
+        updateProfile(user, { displayName: name, photoURL: user.picture })
           .then((update) => {
             // console.log("Update Success ", update);
           })

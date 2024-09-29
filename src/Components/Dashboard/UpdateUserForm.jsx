@@ -46,93 +46,101 @@ export const UpdateUserForm = ({
       form={initForm}
       initialValues={initValues}
     >
-      <Form.Item
-        name="name"
-        label="Name"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="email"
-        label="Email"
-        rules={[
-          {
-            type: "email",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="salary"
-        label="Salary"
-        rules={[
-          {
-            type: "number",
-            required: true,
-          },
-        ]}
-      >
-        <InputNumber />
-      </Form.Item>
-      <Form.Item name="bank_account_no" label="Bank Account No.">
-        <Input />
-      </Form.Item>
+      {(values) => {
+        return (
+          <>
+            <Form.Item
+              name="name"
+              label="Name"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              label="Email"
+              rules={[
+                {
+                  type: "email",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="salary"
+              label="Salary"
+              rules={[
+                {
+                  type: "number",
+                  required: true,
+                },
+              ]}
+            >
+              <InputNumber />
+            </Form.Item>
+            <Form.Item name="bank_account_no" label="Bank Account No.">
+              <Input />
+            </Form.Item>
 
-      <Form.Item
-        className="w-full"
-        label="Role"
-        name="role"
-        rules={[
-          {
-            required: true,
-            message: "Province is required",
-          },
-        ]}
-      >
-        <Select placeholder="Select One" className="w-full">
-          <Option value="Employee">Employee</Option>
-          <Option value="HR">HR</Option>
-          <Option value="Admin">Admin</Option>
-        </Select>
-      </Form.Item>
+            <Form.Item
+              className="w-full"
+              label="Role"
+              name="role"
+              rules={[
+                {
+                  required: true,
+                  message: "Province is required",
+                },
+              ]}
+            >
+              <Select placeholder="Select One" className="w-full">
+                <Option value="Employee">Employee</Option>
+                <Option value="HR">HR</Option>
+                <Option value="Admin">Admin</Option>
+              </Select>
+            </Form.Item>
 
-      <Form.Item
-        className="w-full"
-        label="Designation"
-        name="designation"
-        rules={[
-          {
-            required: true,
-            message: "Province is required",
-          },
-        ]}
-      >
-        <Select placeholder="Select One" className="w-full">
-          <Option value="Employee">Sales</Option>
-          <Option value="HR">Assistant</Option>
-          <Option value="Admin">Social Media executive</Option>
-          <Option value="Admin">Digital Marketer</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item name="picture">
-        <CstUploadFile
-          onChangeAction={(url) => {
-            imageChangeAction(url, values);
-          }}
-        />
-      </Form.Item>
+            <Form.Item
+              className="w-full"
+              label="Designation"
+              name="designation"
+              rules={[
+                {
+                  required: true,
+                  message: "Province is required",
+                },
+              ]}
+            >
+              <Select placeholder="Select One" className="w-full">
+                <Option value="Sales">Sales</Option>
+                <Option value="Assistant">Assistant</Option>
+                <Option value="Social Media executive">
+                  Social Media executive
+                </Option>
+                <Option value="Digital Marketer">Digital Marketer</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item name="picture" label="Profile Picture">
+              <CstUploadFile
+                onChangeAction={(url) => {
+                  imageChangeAction(url, values);
+                }}
+              />
+            </Form.Item>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="w-40">
-          {btnText}
-        </Button>
-      </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" className="w-40">
+                {btnText}
+              </Button>
+            </Form.Item>
+          </>
+        );
+      }}
     </Form>
   );
 };

@@ -20,6 +20,7 @@ import {
   Upload,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import CstUploadFile from "../Components/Utils/CstUploadFile";
 const { Option } = Select;
 
 const layout = {
@@ -37,6 +38,7 @@ const RegisterPage = () => {
   const [isShow, setIsShow] = useState(false);
   const { createUser } = useContext(AuthContext);
 
+  const [form] = Form.useForm();
   const onSubmit = (data) => {
     console.log("RegisterPage data, ", data);
     if (!isEmptyOrNull({ data })) {
@@ -46,6 +48,10 @@ const RegisterPage = () => {
     }
   };
 
+  const onChangeImage = (values, url) => {
+    values.picture = url;
+    form.setFieldsValue(values);
+  };
   const validateMessages = {
     required: "${label} is required!",
     types: {
@@ -84,111 +90,120 @@ const RegisterPage = () => {
                     onFinish={onSubmit}
                     validateMessages={validateMessages}
                   >
-                    <Form.Item
-                      name="name"
-                      label="Name"
-                      rules={[
-                        {
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <Input />
-                    </Form.Item>
-                    <Form.Item
-                      name="email"
-                      label="Email"
-                      rules={[
-                        {
-                          type: "email",
-                        },
-                      ]}
-                    >
-                      <Input />
-                    </Form.Item>
-                    <Form.Item
-                      name="salary"
-                      label="Salary"
-                      rules={[
-                        {
-                          type: "number",
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <InputNumber />
-                    </Form.Item>
-                    <Form.Item name="bank_account_no" label="Bank Account No.">
-                      <Input />
-                    </Form.Item>
+                    {(values) => {
+                      return (
+                        <>
+                          <Form.Item
+                            name="name"
+                            label="Name"
+                            rules={[
+                              {
+                                required: true,
+                              },
+                            ]}
+                          >
+                            <Input />
+                          </Form.Item>
+                          <Form.Item
+                            name="email"
+                            label="Email"
+                            rules={[
+                              {
+                                type: "email",
+                                required: true,
+                              },
+                            ]}
+                          >
+                            <Input />
+                          </Form.Item>
+                          <Form.Item
+                            name="password"
+                            label="Password"
+                            rules={[
+                              {
+                                type: "password",
+                                required: true,
+                              },
+                            ]}
+                          >
+                            <Input.Password />
+                          </Form.Item>
+                          <Form.Item
+                            name="salary"
+                            label="Salary"
+                            rules={[
+                              {
+                                type: "number",
+                                required: true,
+                              },
+                            ]}
+                          >
+                            <InputNumber />
+                          </Form.Item>
+                          <Form.Item
+                            name="bank_account_no"
+                            label="Bank Account No."
+                          >
+                            <Input />
+                          </Form.Item>
 
-                    <Form.Item
-                      className="w-full"
-                      label="Role"
-                      name="role"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Province is required",
-                        },
-                      ]}
-                    >
-                      <Select placeholder="Select One" className="w-full">
-                        <Option value="Employee">Employee</Option>
-                        <Option value="HR">HR</Option>
-                        <Option value="Admin">Admin</Option>
-                      </Select>
-                    </Form.Item>
+                          <Form.Item
+                            className="w-full"
+                            label="Role"
+                            name="role"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Province is required",
+                              },
+                            ]}
+                          >
+                            <Select placeholder="Select One" className="w-full">
+                              <Option value="Employee">Employee</Option>
+                              <Option value="HR">HR</Option>
+                              <Option value="Admin">Admin</Option>
+                            </Select>
+                          </Form.Item>
 
-                    <Form.Item
-                      className="w-full"
-                      label="Designation"
-                      name="designation"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Province is required",
-                        },
-                      ]}
-                    >
-                      <Select placeholder="Select One" className="w-full">
-                        <Option value="Employee">Sales</Option>
-                        <Option value="HR">Assistant</Option>
-                        <Option value="Admin">Social Media executive</Option>
-                        <Option value="Admin">Digital Marketer</Option>
-                      </Select>
-                    </Form.Item>
-                    <Upload
-                      action="/upload.do"
-                      listType="picture-card"
-                      className="py-2 my-2"
-                    >
-                      <button
-                        style={{
-                          border: 0,
-                          background: "none",
-                        }}
-                        type="button"
-                      >
-                        <PlusOutlined />
-                        <div
-                          style={{
-                            marginTop: 8,
-                          }}
-                        >
-                          Upload
-                        </div>
-                      </button>
-                    </Upload>
-                    <Form.Item>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        className="w-full"
-                      >
-                        Register
-                      </Button>
-                    </Form.Item>
+                          <Form.Item
+                            className="w-full"
+                            label="Designation"
+                            name="designation"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Province is required",
+                              },
+                            ]}
+                          >
+                            <Select placeholder="Select One" className="w-full">
+                              <Option value="Employee">Sales</Option>
+                              <Option value="HR">Assistant</Option>
+                              <Option value="Admin">
+                                Social Media executive
+                              </Option>
+                              <Option value="Admin">Digital Marketer</Option>
+                            </Select>
+                          </Form.Item>
+                          <Form.Item name="picture" label="Profile Picture">
+                            <CstUploadFile
+                              onChangeAction={(url) =>
+                                onChangeImage(values, url)
+                              }
+                            />
+                          </Form.Item>
+                          <Form.Item>
+                            <Button
+                              type="primary"
+                              htmlType="submit"
+                              className="w-full"
+                            >
+                              Register
+                            </Button>
+                          </Form.Item>
+                        </>
+                      );
+                    }}
                   </Form>
                 </div>
                 <div className="flex flex-row w-full justify-center items-center gap-7">

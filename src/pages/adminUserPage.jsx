@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { getStrDate, isEmptyOrNull } from "../utils/helper";
+import {
+  getStrDate,
+  isEmptyOrNull,
+  onNotifyError,
+  onNotifySuccess,
+} from "../utils/helper";
 import {
   CheckSquareOutlined,
   CloseSquareOutlined,
   SafetyCertificateOutlined,
 } from "@ant-design/icons";
-import { Card } from "antd";
+import { Card, Form } from "antd";
 import EsModal from "../Components/Utils/EsModal";
 import { UpdateUserForm } from "../Components/Dashboard/UpdateUserForm";
-import { useForm } from "antd/es/form/Form";
+import { updateUserViaApi } from "../utils/apiAction";
 
 const AdminUserPage = ({ ...props }) => {
   const respUser = useLoaderData();
@@ -17,7 +22,7 @@ const AdminUserPage = ({ ...props }) => {
   const [user, setUser] = useState({});
   const [isUpdateModal, setIsUpdateModal] = useState(false);
 
-  const [form] = useForm();
+  const [form] = Form.useForm();
 
   useEffect(() => {
     if (!isEmptyOrNull(respUser)) {
@@ -33,6 +38,23 @@ const AdminUserPage = ({ ...props }) => {
 
   const onEmpolyeeUpdateAction = (values) => {
     console.log("onEmpolyeeUpdateAction ", values);
+
+    values._id = _id;
+
+    updateUserViaApi(values)
+      .then((resp) => {
+        if (!isEmptyOrNull(resp)) {
+          if (resp.status) {
+            onNotifySuccess(resp.message);
+            setIsUpdateModal(false);
+          } else {
+            onNotifyError(resp.message);
+          }
+        }
+      })
+      .catch((error) => {
+        onNotifyError(error.message);
+      });
   };
   const {
     _id,

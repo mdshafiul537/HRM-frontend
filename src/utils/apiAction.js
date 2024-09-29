@@ -1,17 +1,12 @@
 import axios from "axios";
 
-import { REQUEST_HEADER } from "./types";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
-// axios.defaults.withCredentials = true;
-// axios.defaults.mode = "cors";
-// axios.defaults.headers = REQUEST_HEADER;
+const axiosSecure = useAxiosSecure();
 
 export const getAccessToken = async (user) => {
   try {
-    const resp = await axios.post(
-      `${import.meta.env.VITE_API_URL}/auth/token`,
-      { userEmail: user }
-    );
+    const resp = await axiosSecure.post(`/auth/token`, { userEmail: user });
 
     return resp.data;
   } catch (error) {
@@ -21,10 +16,7 @@ export const getAccessToken = async (user) => {
 
 export const getSignOut = async (user) => {
   try {
-    const resp = await axios.post(
-      `${import.meta.env.VITE_API_URL}/auth/logout`,
-      {}
-    );
+    const resp = await axiosSecure.post(`/auth/logout`, {});
 
     console.log("Sign out Resp, ", resp);
 
@@ -36,10 +28,7 @@ export const getSignOut = async (user) => {
 
 export const addUserUsingAPI = async (user) => {
   try {
-    const resp = await axios.post(
-      `${import.meta.env.VITE_API_URL}/users`,
-      user
-    );
+    const resp = await axiosSecure.post(`/users`, user);
 
     return resp.data;
   } catch (error) {
@@ -67,10 +56,7 @@ export const createUserViaAPI = async (user) => {
       user.autId = "";
     }
 
-    const resp = await axios.post(
-      `${import.meta.env.VITE_API_URL}/users`,
-      user
-    );
+    const resp = await axiosSecure.post(`/users`, user);
 
     return resp;
   } catch (error) {
@@ -83,7 +69,7 @@ export const createNewLoginUserUsingAPI = async (profile) => {
     console.log("New Login User Info ", profile);
     const { email, name, picture, verified_email, id } = profile;
 
-    const resp = await axios.post(`${import.meta.env.VITE_API_URL}/users`, {
+    const resp = await axiosSecure.post(`/users`, {
       name,
       email,
       verifiedEmail: verified_email,
@@ -102,9 +88,7 @@ export const createNewLoginUserUsingAPI = async (profile) => {
 
 export const getAllUserByRole = async (role) => {
   try {
-    const resp = await axios.get(
-      `${import.meta.env.VITE_API_URL}/users/role/${role}`
-    );
+    const resp = await axiosSecure.get(`/users/role/${role}`);
 
     return resp.data;
   } catch (error) {
@@ -114,7 +98,7 @@ export const getAllUserByRole = async (role) => {
 
 export const getAllUser = async () => {
   try {
-    const resp = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
+    const resp = await axiosSecure.get(`/users`);
 
     return resp.data;
   } catch (error) {
@@ -124,9 +108,7 @@ export const getAllUser = async () => {
 
 export const getAllUserByQuery = async (query) => {
   try {
-    const resp = await axios.get(
-      `${import.meta.env.VITE_API_URL}/users/query/${query}`
-    );
+    const resp = await axiosSecure.get(`/users/query/${query}`);
 
     return resp.data;
   } catch (error) {
@@ -136,7 +118,7 @@ export const getAllUserByQuery = async (query) => {
 
 export const getUser = async (id) => {
   try {
-    const resp = await axios.get(`${import.meta.env.VITE_API_URL}/users/${id}`);
+    const resp = await axiosSecure.get(`/users/${id}`);
 
     return resp.data;
   } catch (error) {
@@ -144,25 +126,26 @@ export const getUser = async (id) => {
   }
 };
 
-export const updateUser = async (user) => {
+export const updateUserViaApi = async (user) => {
   try {
-    const resp = await axios.put(`${import.meta.env.VITE_API_URL}/users`, user);
+    const resp = await axiosSecure.put(`/users`, user);
 
     return resp.data;
   } catch (error) {
     console.log("updateUser failed Error", error);
+    return error;
   }
 };
 
 export const addTaskAction = async (task) => {
-  const resp = await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, task);
+  const resp = await axiosSecure.post(`/tasks`, task);
 
   return resp.data;
 };
 
 export const getAllTask = async () => {
   try {
-    const resp = await axios.get(`${import.meta.env.VITE_API_URL}/tasks`);
+    const resp = await axiosSecure.get(`/tasks`);
 
     return resp.data;
   } catch (error) {
@@ -172,10 +155,7 @@ export const getAllTask = async () => {
 
 export const addWorkSheetItem = async (work) => {
   try {
-    const resp = await axios.post(
-      `${import.meta.env.VITE_API_URL}/work-sheets`,
-      work
-    );
+    const resp = await axiosSecure.post(`/work-sheets`, work);
     return resp.data;
   } catch (error) {
     console.log("Add Work To Shhet Error ", error);
@@ -185,7 +165,7 @@ export const addWorkSheetItem = async (work) => {
 
 export const getWorkSheet = async () => {
   try {
-    const resp = await axios.get(`${import.meta.env.VITE_API_URL}/work-sheets`);
+    const resp = await axiosSecure.get(`/work-sheets`);
     return resp.data;
   } catch (error) {
     console.log("Add Work To Shhet Error ", error);
@@ -195,9 +175,7 @@ export const getWorkSheet = async () => {
 
 export const getWorkSheetByQuery = async (query) => {
   try {
-    const resp = await axios.get(
-      `${import.meta.env.VITE_API_URL}/work-sheets/query`
-    );
+    const resp = await axiosSecure.get(`/work-sheets/query`);
     return resp.data;
   } catch (error) {
     return error;
@@ -208,7 +186,6 @@ export const uploadFileToImgBB = async (file) => {
   try {
     const formData = new FormData();
     formData.append("image", file);
-    // formData.append("key", import.meta.env.VITE_IMAGE_HOST_API_KEY);
     const resp = await axios.post(
       `${import.meta.env.VITE_IMAGE_HOST_API_URL}?key=${
         import.meta.env.VITE_IMAGE_HOST_API_KEY

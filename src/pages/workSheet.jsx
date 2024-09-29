@@ -9,23 +9,31 @@ import { useLoaderData } from "react-router-dom";
 import { isEmptyOrNull, onNotifyError, onNotifySuccess } from "../utils/helper";
 import { addWorkSheetItem, getWorkSheet } from "../utils/apiAction";
 import LoadingContent from "../Components/Utils/LoadingContent";
+import useWorkSheet from "../hooks/useWorkSheet";
+import useTask from "../hooks/useTask";
 
 const WorkSheetPage = () => {
-  const taskResp = useLoaderData();
-
   const [form] = useForm();
-  const [workSheets, setWorkSheets] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [layoutKey, setLayoutKey] = useState("table");
-  const [isDataIsLoading, setIsDataIsLoading] = useState(true);
+
+  const [workSheetsResp, refetch, isLoading] = useWorkSheet();
+
+  const [taskResp, refetchTask, isTaskLoading] = useTask();
+
+  const [workSheets, setWorkSheets] = useState([]);
 
   useEffect(() => {
-    loadWorkSheet();
-  }, []);
+    if (!isEmptyOrNull(workSheetsResp)) {
+      if (workSheetsResp.status) {
+        onNotifySuccess(workSheetsResp.message);
+        setWorkSheets(workSheetsResp.response);
+      }
+    }
+  }, [workSheetsResp]);
 
   useEffect(() => {
-    console.log("WorkSheet task Resp, ", taskResp);
-
+    console.log("Task Resp ", taskResp);
     if (!isEmptyOrNull(taskResp)) {
       if (taskResp.status) {
         setTasks(taskResp.response);
@@ -40,7 +48,7 @@ const WorkSheetPage = () => {
         if (!isEmptyOrNull(resp)) {
           if (resp.status) {
             onNotifySuccess("Record added to worksheet");
-            loadWorkSheet();
+            refetch();
           }
         }
       })
@@ -49,24 +57,11 @@ const WorkSheetPage = () => {
       });
   };
 
-  const loadWorkSheet = () => {
-    setIsDataIsLoading(true);
-    getWorkSheet().then((resp) => {
-      if (!isEmptyOrNull(resp)) {
-        if (resp.status) {
-          setIsDataIsLoading(false);
-          setWorkSheets(resp.response);
-        }
-      }
-    });
-  };
-
   const onFailedAction = (error) => {
     console.log("Task Add Error ", error);
   };
 
   const onChangeLayout = (key) => {
-    console.log("Selected Layout ", layoutKey, " Key ", key);
     if (layoutKey !== key) {
       setLayoutKey(key);
     }
@@ -97,7 +92,7 @@ const WorkSheetPage = () => {
             >
               {layoutKey === "grid" ? (
                 <>
-                  {isDataIsLoading ? (
+                  {isLoading ? (
                     <LoadingContent />
                   ) : (
                     <WorkSheetItems items={workSheets} />
@@ -105,7 +100,7 @@ const WorkSheetPage = () => {
                 </>
               ) : (
                 <>
-                  {isDataIsLoading ? (
+                  {isLoading ? (
                     <LoadingContent />
                   ) : (
                     <Table

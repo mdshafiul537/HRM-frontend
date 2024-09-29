@@ -20,8 +20,8 @@ export const employeeCols = [
   },
   {
     title: "Bank Account",
-    dataIndex: "bankAccount",
-    key: "bankAccount",
+    dataIndex: "bank_account_no",
+    key: "bank_account_no",
   },
   {
     title: "Salary",

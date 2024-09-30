@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import { Helmet } from "react-helmet";
 import { isEmptyOrNull } from "../utils/helper";
@@ -34,16 +34,16 @@ const layout = {
 };
 
 const RegisterPage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [isShow, setIsShow] = useState(false);
   const { createUser } = useContext(AuthContext);
 
   const [form] = Form.useForm();
   const onSubmit = (data) => {
-    console.log("RegisterPage data, ", data);
     if (!isEmptyOrNull({ data })) {
       createUser(data, () => {
-        navigate("/login");
+        navigate(location.state?.from);
       });
     }
   };

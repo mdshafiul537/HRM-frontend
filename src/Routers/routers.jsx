@@ -40,23 +40,14 @@ const router = createBrowserRouter([
           {
             path: "/administrator/work-sheet",
             element: <WorkSheetPage />,
-            loader: async () => {
-              return await getAllTask();
-            },
           },
           {
             path: "/administrator/progress",
             element: <WorkProgressPage />,
-            loader: async () => {
-              return getWorkSheet();
-            },
           },
           {
             path: "/administrator/work-sheets",
             element: <WorkCheckedPage />,
-            loader: async () => {
-              return getWorkSheet();
-            },
           },
 
           {
@@ -74,9 +65,6 @@ const router = createBrowserRouter([
           {
             path: "/administrator/tasks",
             element: <AllTaskPage />,
-            loader: async () => {
-              return await getAllTask();
-            },
           },
 
           {

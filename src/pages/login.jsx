@@ -23,7 +23,7 @@ export const LoginPage = () => {
   const onSubmit = (data) => {
     loginUserPass(data, () => {
       if (!isEmptyOrNull(location.state)) {
-        navigate(location.state);
+        navigate(location.state?.from);
       } else {
         navigate("/");
       }
@@ -33,7 +33,7 @@ export const LoginPage = () => {
   const onLoginWithGoogle = () => {
     loginWithGoogle(() => {
       if (!isEmptyOrNull(location.state)) {
-        navigate(location.state);
+        navigate(location.state?.from);
       } else {
         navigate("/");
       }
@@ -43,7 +43,7 @@ export const LoginPage = () => {
   const onLoginWithGitHub = () => {
     loginWithGitHub(() => {
       if (!isEmptyOrNull(location.state)) {
-        navigate(location.state);
+        navigate(location.state?.from);
       } else {
         navigate("/");
       }

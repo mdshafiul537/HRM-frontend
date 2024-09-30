@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 import { taskCols } from "../utils/cols/taskCols";
 import { useLoaderData } from "react-router-dom";
 import { isEmptyOrNull } from "../utils/helper";
+import useTask from "../hooks/useTask";
+import LoadingContent from "../Components/Utils/LoadingContent";
 
 const AllTaskPage = () => {
-  const taskResp = useLoaderData();
-
+  const [taskResp, refetch, isLoading] = useTask();
   useEffect(() => {
     if (!isEmptyOrNull(taskResp)) {
       if (taskResp.status) {
@@ -30,10 +31,14 @@ const AllTaskPage = () => {
         <Row>
           <Col span={24}>
             <Card title="Complete Task/Work">
-              <Table
-                dataSource={tasks}
-                columns={taskCols({ onUpdateAction, onRemoveAction })}
-              />
+              {isLoading ? (
+                <LoadingContent />
+              ) : (
+                <Table
+                  dataSource={tasks}
+                  columns={taskCols({ onUpdateAction, onRemoveAction })}
+                />
+              )}
             </Card>
           </Col>
         </Row>

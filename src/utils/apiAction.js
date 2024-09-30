@@ -1,13 +1,17 @@
 import axios from "axios";
 
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import localStore from "./localStore";
 
-const axiosSecure = useAxiosSecure();
+const axiosPublic = useAxiosPublic();
 
 export const getAccessToken = async (user) => {
   try {
-    const resp = await axiosSecure.post(`/auth/token`, { userEmail: user });
-
+    const resp = await axiosPublic.post(`/auth/token`, { userEmail: user });
+    if (resp.data.status) {
+      localStore.addToken(resp.data.response);
+    }
     return resp.data;
   } catch (error) {
     console.log("HR Token,", error);
@@ -15,11 +19,10 @@ export const getAccessToken = async (user) => {
 };
 
 export const getSignOut = async (user) => {
+  const axiosSecure = useAxiosSecure();
   try {
     const resp = await axiosSecure.post(`/auth/logout`, {});
-
-    console.log("Sign out Resp, ", resp);
-
+    localStore.removeToken();
     return resp.data;
   } catch (error) {
     console.log("HR SignOut,", error);
@@ -28,6 +31,7 @@ export const getSignOut = async (user) => {
 
 export const addUserUsingAPI = async (user) => {
   try {
+    const axiosSecure = useAxiosSecure();
     const resp = await axiosSecure.post(`/users`, user);
 
     return resp.data;
@@ -38,8 +42,6 @@ export const addUserUsingAPI = async (user) => {
 
 export const createUserViaAPI = async (user) => {
   try {
-    console.log("createUser Info ", user);
-
     if (!user.hasOwnProperty("verified")) {
       user.verified = false;
     }
@@ -56,7 +58,7 @@ export const createUserViaAPI = async (user) => {
       user.autId = "";
     }
 
-    const resp = await axiosSecure.post(`/users`, user);
+    const resp = await axiosPublic.post(`/users`, user);
 
     return resp;
   } catch (error) {
@@ -66,10 +68,9 @@ export const createUserViaAPI = async (user) => {
 
 export const createNewLoginUserUsingAPI = async (profile) => {
   try {
-    console.log("New Login User Info ", profile);
     const { email, name, picture, verified_email, id } = profile;
 
-    const resp = await axiosSecure.post(`/users`, {
+    const resp = await axiosPublic.post(`/users`, {
       name,
       email,
       verifiedEmail: verified_email,
@@ -88,6 +89,8 @@ export const createNewLoginUserUsingAPI = async (profile) => {
 
 export const getAllUserByRole = async (role) => {
   try {
+    const axiosSecure = useAxiosSecure();
+
     const resp = await axiosSecure.get(`/users/role/${role}`);
 
     return resp.data;
@@ -98,6 +101,8 @@ export const getAllUserByRole = async (role) => {
 
 export const getAllUser = async () => {
   try {
+    const axiosSecure = useAxiosSecure();
+
     const resp = await axiosSecure.get(`/users`);
 
     return resp.data;
@@ -108,6 +113,8 @@ export const getAllUser = async () => {
 
 export const getAllUserByQuery = async (query) => {
   try {
+    const axiosSecure = useAxiosSecure();
+
     const resp = await axiosSecure.get(`/users/query/${query}`);
 
     return resp.data;
@@ -117,6 +124,8 @@ export const getAllUserByQuery = async (query) => {
 };
 
 export const getUser = async (id) => {
+  const axiosSecure = useAxiosSecure();
+
   try {
     const resp = await axiosSecure.get(`/users/${id}`);
 
@@ -128,6 +137,8 @@ export const getUser = async (id) => {
 
 export const updateUserViaApi = async (user) => {
   try {
+    const axiosSecure = useAxiosSecure();
+
     const resp = await axiosSecure.put(`/users`, user);
 
     return resp.data;
@@ -138,6 +149,8 @@ export const updateUserViaApi = async (user) => {
 };
 
 export const addTaskAction = async (task) => {
+  const axiosSecure = useAxiosSecure();
+
   const resp = await axiosSecure.post(`/tasks`, task);
 
   return resp.data;
@@ -145,6 +158,8 @@ export const addTaskAction = async (task) => {
 
 export const getAllTask = async () => {
   try {
+    const axiosSecure = useAxiosSecure();
+
     const resp = await axiosSecure.get(`/tasks`);
 
     return resp.data;
@@ -155,6 +170,8 @@ export const getAllTask = async () => {
 
 export const addWorkSheetItem = async (work) => {
   try {
+    const axiosSecure = useAxiosSecure();
+
     const resp = await axiosSecure.post(`/work-sheets`, work);
     return resp.data;
   } catch (error) {
@@ -165,6 +182,8 @@ export const addWorkSheetItem = async (work) => {
 
 export const getWorkSheet = async () => {
   try {
+    const axiosSecure = useAxiosSecure();
+
     const resp = await axiosSecure.get(`/work-sheets`);
     return resp.data;
   } catch (error) {
@@ -175,6 +194,8 @@ export const getWorkSheet = async () => {
 
 export const getWorkSheetByQuery = async (query) => {
   try {
+    const axiosSecure = useAxiosSecure();
+
     const resp = await axiosSecure.get(`/work-sheets/query`);
     return resp.data;
   } catch (error) {

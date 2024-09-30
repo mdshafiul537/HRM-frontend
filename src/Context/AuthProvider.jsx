@@ -25,6 +25,7 @@ import {
   getAccessToken,
   getSignOut,
 } from "../utils/apiAction";
+import localStore from "../utils/localStore";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children, ...props }) => {
@@ -86,7 +87,7 @@ const AuthProvider = ({ children, ...props }) => {
         // sendEmailVerification(user).then((res) => {
         //   onNotifySuccess("Please, check you email and verify you account");
         // });
-        signOut(auth);
+
         setTimeout(() => {
           callBack();
         }, 700);
@@ -167,6 +168,7 @@ const AuthProvider = ({ children, ...props }) => {
         getAccessToken(userEmail);
       } else {
         console.log("User Not Found");
+        localStore.removeToken();
       }
     });
 

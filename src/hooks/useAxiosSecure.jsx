@@ -1,13 +1,16 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { REQUEST_HEADER } from "../utils/types";
+import { REQUEST_HEADER_SECURE } from "../utils/types";
+import localStore from "../utils/localStore";
 
-// axios.defaults.withCredentials = true;
-// axios.defaults.mode = "cors";
-// axios.defaults.headers = REQUEST_HEADER;
+const getHeaders = () => {
+  const headers = REQUEST_HEADER_SECURE;
+  REQUEST_HEADER_SECURE.Authorization = localStore.getToken();
+  return headers;
+};
+
 const axiosSecure = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  headers: REQUEST_HEADER,
+  headers: getHeaders(),
 });
 
 const useAxiosSecure = () => {

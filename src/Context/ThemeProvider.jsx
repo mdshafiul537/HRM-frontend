@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { createContext, useState } from "react";
-import { Button, ConfigProvider, theme, Space } from "antd";
+import { ConfigProvider, theme, Space } from "antd";
 
 export const ThemeContext = createContext({});
 const { defaultAlgorithm, darkAlgorithm } = theme;

@@ -1,17 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getAllTask } from "../utils/apiAction";
+import useAxiosSecure from "./useAxiosSecure";
 
 const initialData = {};
 
 const useTask = () => {
+  const axiosSecure = useAxiosSecure();
   const { data, refetch, isLoading } = useQuery({
     initialData,
     queryKey: ["tasks"],
     queryFn: async () => {
-      const resp = await getAllTask();
+      const resp = await axiosSecure.get(`/tasks`);
 
-      return resp;
+      return resp.data;
     },
   });
 

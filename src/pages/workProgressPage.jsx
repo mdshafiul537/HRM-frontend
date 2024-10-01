@@ -11,9 +11,10 @@ import WorkSheetItems from "../Components/WorkSheet/WorkSheetItems";
 import { useLoaderData } from "react-router-dom";
 import { isEmptyOrNull, onNotifyError } from "../utils/helper";
 import { getWorkSheet, getWorkSheetByQuery } from "../utils/apiAction";
+import useWorkSheet from "../hooks/useWorkSheet";
 
 const WorkProgressPage = () => {
-  const workSheetResp = useLoaderData();
+  const [workSheetResp, reloadWorkSheet, isLoading] = useWorkSheet();
 
   const [layoutKey, setLayoutKey] = useState("table");
   const [workSheets, setWorkSheets] = useState([]);
@@ -50,7 +51,11 @@ const WorkProgressPage = () => {
           >
             <div className="flex flex-row-reverse">
               <div className="flex flex-row">
-                <SelectLayout onChangeLayout={setLayoutKey} type={layoutKey} />
+                <SelectLayout
+                  onChangeLayout={setLayoutKey}
+                  type={layoutKey}
+                  reLoad={reloadWorkSheet}
+                />
               </div>
             </div>
             {layoutKey === "table" ? (

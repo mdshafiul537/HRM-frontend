@@ -21,9 +21,6 @@ class LocalStore {
   };
 
   getToken = () => {
-    if (this.token !== null) {
-      return this.token;
-    }
     const tokenStr = this.storage.getItem("token");
     if (!isEmptyOrNull(tokenStr)) {
       this.token = JSON.parse(tokenStr);

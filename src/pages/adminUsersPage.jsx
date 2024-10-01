@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 import { employeeAdminCols } from "../utils/cols/employeeCols";
 import { useLoaderData } from "react-router-dom";
 import { isEmptyOrNull } from "../utils/helper";
+import useUser from "../hooks/useUser";
+import LoadingContent from "../Components/Utils/LoadingContent";
 
 const AdminUsersPage = () => {
-  const respUser = useLoaderData();
-
+  const [respUser, refetch, isLoading] = useUser();
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
@@ -21,7 +22,11 @@ const AdminUsersPage = () => {
     <>
       <div className="w-full">
         <Card title="Employee">
-          <Table dataSource={employees} columns={employeeAdminCols} />
+          {isLoading ? (
+            <LoadingContent />
+          ) : (
+            <Table dataSource={employees} columns={employeeAdminCols} />
+          )}
         </Card>
       </div>
     </>

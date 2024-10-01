@@ -1,7 +1,6 @@
 import React from "react";
-import { AppstoreOutlined, BorderBottomOutlined } from "@ant-design/icons";
 
-const SelectLayout = ({ onChangeLayout, type = "table", ...props }) => {
+const SelectLayout = ({ onChangeLayout, type = "table", reLoad, ...props }) => {
   return (
     <React.Fragment>
       <div className="flex flex-row gap-2 text-xl font-medium">
@@ -24,6 +23,9 @@ const SelectLayout = ({ onChangeLayout, type = "table", ...props }) => {
           }}
         >
           <i className="fa-solid fa-table"></i>
+        </span>
+        <span className={`p-2 cursor-pointer`} onClick={reLoad}>
+          <i className="fa-solid fa-arrow-rotate-right"></i>
         </span>
       </div>
     </React.Fragment>

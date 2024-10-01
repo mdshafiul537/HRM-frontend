@@ -19,11 +19,8 @@ export const getAccessToken = async (user) => {
 };
 
 export const getSignOut = async (user) => {
-  const axiosSecure = useAxiosSecure();
   try {
-    const resp = await axiosSecure.post(`/auth/logout`, {});
     localStore.removeToken();
-    return resp.data;
   } catch (error) {
     console.log("HR SignOut,", error);
   }

@@ -1,11 +1,12 @@
 import { Card, Table } from "antd";
 import React, { useState, useEffect } from "react";
 import { employeeCols } from "../utils/cols/employeeCols";
-import { useLoaderData } from "react-router-dom";
 import { isEmptyOrNull } from "../utils/helper";
+import useUser from "../hooks/useUser";
+import LoadingContent from "../Components/Utils/LoadingContent";
 
 const UsersPage = () => {
-  const respUser = useLoaderData();
+  const [respUser, refetch, isLoading] = useUser();
 
   const [employees, setEmployees] = useState([]);
 
@@ -17,12 +18,16 @@ const UsersPage = () => {
     }
   }, [respUser]);
 
-  console.log("Users ", employees)
+  console.log("Users ", employees);
   return (
     <>
       <div className="w-full">
         <Card title="Employee">
-          <Table dataSource={employees} columns={employeeCols} />
+          {isLoading ? (
+            <LoadingContent />
+          ) : (
+            <Table dataSource={employees} columns={employeeCols} />
+          )}
         </Card>
       </div>
     </>

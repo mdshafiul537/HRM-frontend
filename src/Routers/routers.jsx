@@ -70,25 +70,16 @@ const router = createBrowserRouter([
           {
             path: "/administrator/employee-list",
             element: <UsersPage />,
-            loader: async () => {
-              return await getAllUser();
-            },
           },
 
           {
             path: "/administrator/employee-list/details/:id",
             element: <AdminUserPage />,
-            loader: async ({ params }) => {
-              return await getUser(params.id);
-            },
           },
 
           {
             path: "/administrator/all-employee-list",
             element: <AdminUsersPage />,
-            loader: async () => {
-              return await getAllUser();
-            },
           },
         ],
       },

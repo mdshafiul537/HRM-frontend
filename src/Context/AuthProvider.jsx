@@ -176,22 +176,18 @@ const AuthProvider = ({ children, ...props }) => {
       unSubscribe();
     };
   }, []);
-
+  const authInf = {
+    user,
+    logOut,
+    createUser,
+    loginUserPass,
+    loginWithGoogle,
+    loginWithGitHub,
+    updateUser,
+    isLoading,
+  };
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        logOut,
-        createUser,
-        loginUserPass,
-        loginWithGoogle,
-        loginWithGitHub,
-        updateUser,
-        isLoading,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={authInf}>{children}</AuthContext.Provider>
   );
 };
 

@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import WorkSheetCard from "./WorkSheetCard";
-import { Empty } from "antd";
+import { Empty, Pagination } from "antd";
 
 const WorkSheetItems = ({ items = [], ...props }) => {
+  const [pageSize, setPageSize] = useState(6);
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(6);
+
+  const onPageChange = (page, pSize) => {
+    setStart((page - 1) * pSize);
+    setEnd(pSize * page);
+  };
+
   return (
     <div className="grid grid-cols-12 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-12 gap-6">
       {items?.length > 0 ? (
-        items?.map((item) => {
+        items?.slice(start, end).map((item) => {
           return (
             <div className="xs:col-span-1 sm:col-span-1 md:col-span-4 lg:col-span-4">
               <WorkSheetCard key={`sheet-${item._id}`} item={item} />
@@ -18,6 +27,13 @@ const WorkSheetItems = ({ items = [], ...props }) => {
           <Empty />
         </div>
       )}
+      <div className="w-full col-span-12">
+        <Pagination
+          total={items?.length}
+          pageSize={pageSize}
+          onChange={onPageChange}
+        />
+      </div>
     </div>
   );
 };

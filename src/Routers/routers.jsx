@@ -22,6 +22,7 @@ import {
 } from "../utils/apiAction";
 import { LoginPage } from "../pages/login";
 import AdminUserPage from "../pages/adminUserPage";
+import PaidComplete from "../pages/paidComplete";
 
 const router = createBrowserRouter([
   {
@@ -57,9 +58,6 @@ const router = createBrowserRouter([
           {
             path: "/administrator/payments/:id",
             element: <PaidAddPage />,
-            loader: async ({ params }) => {
-              return getUser(params?.id);
-            },
           },
           {
             path: "/administrator/payment-add",
@@ -88,6 +86,11 @@ const router = createBrowserRouter([
             path: "/administrator/all-employee-list",
             element: <AdminUsersPage />,
           },
+
+          {
+            path:`/administrator/payments/paid-complete`,
+            element:<PaidComplete />
+          }
         ],
       },
     ],

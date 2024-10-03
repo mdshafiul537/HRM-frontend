@@ -1,34 +1,79 @@
 import { Card, Col, Row, Table } from "antd";
-import React, { useState } from "react";
-import { paymentCols } from "../utils/cols/paymentCols";
-import TaskAddForm from "../Components/Dashboard/TaskAddForm";
-import { useForm } from "antd/es/form/Form";
+import React, { useEffect, useState } from "react";
+
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useParams } from "react-router-dom";
+import LoadingContent from "../Components/Utils/LoadingContent";
+import PaymentCard from "../Components/Payment/PaymentCard";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import EmployeeCard from "../Components/Employee/EmployeeCard";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
 
 const PaidAddPage = () => {
-  const [form] = useForm();
+  const params = useParams();
 
-  const [payments, setPayments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const onSubmitAction = (values) => {
-    console.log("TaskAddPage onSubmitAction, ", values);
+  const [clientSecret, setClientSecret] = useState("");
+  const [employee, setEmployee] = useState(undefined);
+
+  const axiosSecure = useAxiosSecure();
+
+  useEffect(() => {
+    axiosSecure
+      .post(`/payments/create-intent`, {
+        id: params?.id,
+        date: new Date(),
+      })
+      .then((resp) => {
+        if (resp.data) {
+          if (resp.data.status) {
+            setClientSecret(resp.data?.response?.key);
+            setEmployee(resp.data?.response?.employee);
+          }
+        }
+      })
+      .catch((error) => {
+        console.log("create-intent Error, ", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log("clientSecret, ", clientSecret);
+    if (!clientSecret) {
+      setIsLoading(false);
+    }
+  }, [clientSecret]);
+
+  const appearance = {
+    theme: "stripe",
   };
+  // Enable the skeleton loader UI for optimal loading.
+  const loader = "auto";
 
-  const onFailedAction = (values) => {
-    console.log("TaskAddPage onFailedAction, ", values);
-  };
+  if (isLoading) {
+    return <LoadingContent />;
+  }
+  console.log("Key ", clientSecret);
+  console.log("employee ", employee);
   return (
     <>
       <div className="w-full">
-        <Row>
-          <Col span={24}>
-            <Card title="Add Task/Work">
-              <TaskAddForm
-                initForm={form}
-                name="Add"
-                onAction={onSubmitAction}
-                onFailedAction={onFailedAction}
-              />
-            </Card>
+        <Row gutter={[20, 20]}>
+          <Col span={10}>
+            <EmployeeCard employee={employee} />
+          </Col>
+          <Col span={14}>
+            {clientSecret && (
+              <Elements
+                options={{ clientSecret, appearance, loader }}
+                stripe={stripePromise}
+              >
+                <PaymentCard clientSecret={clientSecret} />
+              </Elements>
+            )}
           </Col>
         </Row>
       </div>

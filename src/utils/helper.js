@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
+import dateFormat, { masks } from "dateformat";
 import { Bounce, toast } from "react-toastify";
 
 const SwalAllert = withReactContent(Swal);
@@ -51,6 +51,11 @@ export const esIsArray = (list) => {
 
 export const getStrDate = (date) => {
   return new Date(date).toDateString();
+};
+
+export const getStrMonthYearDate = (date) => {
+  if (isEmptyOrNull(date)) date = new Date();
+  return dateFormat(date, "mmm-yyyy");
 };
 
 export const onNotify = (title) => {

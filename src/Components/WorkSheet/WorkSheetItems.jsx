@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import WorkSheetCard from "./WorkSheetCard";
 import { Empty, Pagination } from "antd";
 
-const WorkSheetItems = ({ items = [], ...props }) => {
+const WorkSheetItems = ({
+  items = [],
+  isAction = false,
+  onMarkItem,
+  ...props
+}) => {
   const [pageSize, setPageSize] = useState(6);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(6);
@@ -18,7 +23,12 @@ const WorkSheetItems = ({ items = [], ...props }) => {
         items?.slice(start, end).map((item) => {
           return (
             <div className="xs:col-span-1 sm:col-span-1 md:col-span-4 lg:col-span-4">
-              <WorkSheetCard key={`sheet-${item._id}`} item={item} />
+              <WorkSheetCard
+                key={`sheet-${item._id}`}
+                item={item}
+                onMarkItem={onMarkItem}
+                isAction={isAction}
+              />
             </div>
           );
         })

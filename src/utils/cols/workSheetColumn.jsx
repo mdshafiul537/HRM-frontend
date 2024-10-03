@@ -23,7 +23,7 @@ export const workSheetColumns = () => {
   ];
 };
 
-export const workSheetStatusColumns = () => {
+export const workSheetStatusColumns = (onMarkItem) => {
   return [
     {
       title: "Employee",
@@ -50,16 +50,25 @@ export const workSheetStatusColumns = () => {
     },
     {
       title: "Status",
-      dataIndex: "cheked ",
+      dataIndex: "cheked",
       key: "cheked",
-      render: (status) => {
+      render: (status, item) => {
+        console.log("Wroksheet ", status, ", ", item);
         return status ? (
-          <div className="text-center  font-bold bg-green-700 px-2 py-1 rounded-lg">
-            Cheked
+          <div className="text-center text-gray-200 font-bold flex flex-row gap-4">
+            <span className="px-2 py-1 bg-green-600 ">Cheked</span>
           </div>
         ) : (
-          <div className="text-center text-gray-200 font-bold bg-red-400 px-2 py-1 rounded-lg">
-            Pending
+          <div className="text-center text-gray-200 font-bold flex flex-row gap-4">
+            <span className="px-2 py-1 bg-red-500 ">Pending</span>
+            <span
+              className="px-2 py-1 bg-teal-700 cursor-pointer"
+              onClick={() => {
+                onMarkItem(item);
+              }}
+            >
+              Mark It{" "}
+            </span>
           </div>
         );
       },

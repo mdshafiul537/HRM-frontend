@@ -55,6 +55,13 @@ const router = createBrowserRouter([
             element: <PaymentHistoryPage />,
           },
           {
+            path: "/administrator/payments/:id",
+            element: <PaidAddPage />,
+            loader: async ({ params }) => {
+              return getUser(params?.id);
+            },
+          },
+          {
             path: "/administrator/payment-add",
             element: <PaidAddPage />,
           },

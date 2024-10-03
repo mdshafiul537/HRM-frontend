@@ -6,18 +6,21 @@ import {
   workSheetStatusColumns,
 } from "../utils/cols/workSheetColumn";
 import SelectLayout from "../Components/Dashboard/SelectLayout";
-import { key } from "localforage";
+
 import WorkSheetItems from "../Components/WorkSheet/WorkSheetItems";
-import { useLoaderData } from "react-router-dom";
-import { isEmptyOrNull, onNotifyError } from "../utils/helper";
-import { getWorkSheet, getWorkSheetByQuery } from "../utils/apiAction";
+
+import { isEmptyOrNull, onNotifyError, onNotifySuccess } from "../utils/helper";
+import { getWorkSheetByQuery } from "../utils/apiAction";
 import useWorkSheet from "../hooks/useWorkSheet";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const WorkProgressPage = () => {
   const [workSheetResp, reloadWorkSheet, isLoading] = useWorkSheet();
 
   const [layoutKey, setLayoutKey] = useState("table");
   const [workSheets, setWorkSheets] = useState([]);
+
+  const axiosSecure = useAxiosSecure();
   const onSearchAction = (query) => {
     getWorkSheetByQuery(query)
       .then((resp) => {
@@ -40,6 +43,23 @@ const WorkProgressPage = () => {
     }
   }, [workSheetResp]);
 
+  const onMarkItemAction = (item) => {
+    axiosSecure
+      .patch(`/work-sheets`, { id: item._id, cheked: true })
+      .then((resp) => {
+        if (resp.data.status) {
+          onNotifySuccess("work-sheet 'Cheked' successfully");
+          reloadWorkSheet();
+        } else {
+          onNotifyError("work-sheet 'Cheked' Failed");
+        }
+      })
+      .catch((error) => {
+        console.log("Mark Error ", error);
+        onNotifyError("Work-sheet 'Cheked' Failed!!");
+      });
+  };
+
   return (
     <div className="w-full">
       <Row>
@@ -61,11 +81,15 @@ const WorkProgressPage = () => {
             {layoutKey === "table" ? (
               <Table
                 dataSource={workSheets}
-                columns={workSheetStatusColumns()}
+                columns={workSheetStatusColumns(onMarkItemAction)}
                 pagination={{ pageSize: 5 }}
               />
             ) : (
-              <WorkSheetItems items={workSheets} />
+              <WorkSheetItems
+                items={workSheets}
+                isAction={true}
+                onMarkItem={onMarkItemAction}
+              />
             )}
           </Card>
         </Col>

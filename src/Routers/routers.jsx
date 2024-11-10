@@ -24,6 +24,7 @@ import { LoginPage } from "../pages/login";
 import AdminUserPage from "../pages/adminUserPage";
 import PaidComplete from "../pages/paidComplete";
 import PrivateAccess from "./PrivateAccess";
+import ContactPage from "../pages/contactPage";
 
 const router = createBrowserRouter([
   {
@@ -97,6 +98,11 @@ const router = createBrowserRouter([
             element: <PaidComplete />,
           },
         ],
+      },
+
+      {
+        path: "/contact-us",
+        element: <ContactPage />,
       },
     ],
   },

@@ -51,6 +51,9 @@ const HomePage = () => {
 
         <div className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-7">
           <div className="w-full">
+            <h2 className="text-2xl font-bold my-6">
+              We're here to support you along the way
+            </h2>
             <ContactForm />
           </div>
           <div>

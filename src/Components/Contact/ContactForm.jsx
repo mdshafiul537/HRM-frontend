@@ -35,10 +35,6 @@ const ContactForm = ({ initValues }) => {
     <React.Fragment>
       <div className="w-full flex flex-col items-center justify-center">
         <div className="w-full flex flex-col my-7">
-          <h2 className="text-2xl font-bold my-6">
-            We're here to support you along the way
-          </h2>
-
           <Form onFinish={onSubmit} form={form} className="flex flex-col gap-4">
             <div className="grid grid-cols-2 md:grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 gap-5">
               <div className="flex flex-col gap-3">

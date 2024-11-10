@@ -22,11 +22,6 @@ const HRHeader = () => {
 
   const [current, setCurrent] = useState("home");
 
-  useEffect(() => {
-    console.log("User Log Out location,", location);
-    console.log("User Log Out, ", user);
-  }, [user]);
-
   const onLogOutAction = (e) => {
     logOut();
   };

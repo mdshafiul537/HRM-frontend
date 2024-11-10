@@ -112,6 +112,7 @@ const AuthProvider = ({ children, ...props }) => {
         }
         onNotifySuccess(`${userInfo?.profile?.name} you are login`);
 
+        getAccessToken(userInfo?.profile?.email);
         callBack();
       })
       .catch((error) => {
@@ -130,6 +131,7 @@ const AuthProvider = ({ children, ...props }) => {
         if (userInfo.isNewUser) {
           createNewLoginUserUsingAPI(userInfo.profile);
         }
+        getAccessToken(userInfo?.profile?.email);
 
         onNotifySuccess(`${user.displayName} you are login`);
 
@@ -146,6 +148,7 @@ const AuthProvider = ({ children, ...props }) => {
     signInWithEmailAndPassword(auth, username, password)
       .then(({ user, ...userCredential }) => {
         onNotifySuccess(`${user.displayName} you are login :)`);
+        getAccessToken(user?.email);
         callBack();
       })
       .catch((error) => {

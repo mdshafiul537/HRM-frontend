@@ -88,9 +88,9 @@ const router = createBrowserRouter([
           },
 
           {
-            path:`/administrator/payments/paid-complete`,
-            element:<PaidComplete />
-          }
+            path: `/administrator/payments/paid-complete`,
+            element: <PaidComplete />,
+          },
         ],
       },
     ],

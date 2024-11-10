@@ -1,12 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { Helmet } from "react-helmet";
 import { AuthContext } from "../Context/AuthProvider";
 import { isEmptyOrNull } from "../utils/helper";
-import { useForm } from "antd/es/form/Form";
-import { Button, Card, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -15,10 +14,6 @@ export const LoginPage = () => {
   // console.log("Login Location ", location);
   const { loginUserPass, loginWithGoogle, loginWithGitHub } =
     useContext(AuthContext);
-
-  const [isShow, setIsShow] = useState(false);
-
-  const [form] = useForm();
 
   const onSubmit = (data) => {
     loginUserPass(data, () => {

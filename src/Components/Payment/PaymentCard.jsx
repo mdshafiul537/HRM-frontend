@@ -6,7 +6,11 @@ import {
 } from "@stripe/react-stripe-js";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { isEmptyOrNull } from "../../utils/helper";
+import {
+  getDateMonthYear,
+  isEmptyOrNull,
+  onNotifyError,
+} from "../../utils/helper";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Spin } from "antd";
 
@@ -20,6 +24,7 @@ const PaymentCard = ({ ...props }) => {
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
 
   const [clientSecret, setClientSecret] = useState("");
   const [employee, setEmployee] = useState(undefined);
@@ -31,13 +36,11 @@ const PaymentCard = ({ ...props }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!stripe) {
+    if (!stripe || isDisable) {
       // Stripe.js hasn't yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-
-    setIsLoading(true);
 
     // Trigger form validation and wallet collection
     const { error: submitError } = await elements.submit();
@@ -47,14 +50,21 @@ const PaymentCard = ({ ...props }) => {
       return;
     }
 
+    setIsLoading(true);
+
     const respIntent = await axiosSecure.post(`/payments/create-intent`, {
       id: params?.id,
-      date: new Date(),
+      date: getDateMonthYear(new Date()),
     });
 
-    if (!isEmptyOrNull(respIntent.data)) {
-      setClientSecret(respIntent.data?.response?.key);
-      setEmployee(respIntent.data?.response?.employee);
+    console.log("Keys ", respIntent.data?.response);
+    if (isEmptyOrNull(respIntent.data?.response?.key)) {
+      onNotifyError(respIntent.data?.response.message);
+      setIsDisable(true);
+      setIsLoading(false);
+      return;
+    } else {
+      setIsDisable(false);
     }
 
     // Use the clientSecret and Elements instance to confirm the setup
@@ -75,8 +85,40 @@ const PaymentCard = ({ ...props }) => {
     if (paymentIntent) {
       setIsLoading(false);
       console.log("paymentIntent ", paymentIntent);
+
+      if (paymentIntent.status === "succeeded") {
+        const {
+          id,
+          amount,
+          created,
+          currency,
+          description,
+          payment_method_types,
+          status,
+          ...payment
+        } = paymentIntent;
+
+        const date = new Date();
+
+        axiosSecure
+          .post(`/payments`, {
+            transactionId: id,
+            amount,
+            transactionTime: new Date(created),
+            description,
+            methodType: payment_method_types[0],
+            status,
+            createIn: date,
+            monthYear: getDateMonthYear(date),
+            user: respIntent.data?.response?.employee?._id,
+            userEmail: respIntent.data?.response?.employee?.email,
+          })
+          .then((resp) => {
+            console.log("Payment Successfully, ", resp.data);
+          })
+          .catch((error) => console.log("Payment Error, ", error));
+      }
     }
-    return;
   };
 
   const paymentElementOptions = {
@@ -105,7 +147,11 @@ const PaymentCard = ({ ...props }) => {
                 <Spin size="small" />
               </div>
             ) : (
-              <span className="font-medium h-full w-28 bg-teal-700 hover:bg-teal-900  shadow-md py-1 px-4">
+              <span
+                className={`font-medium h-full w-28 bg-teal-700 hover:bg-teal-900  shadow-md py-1 px-4 ${
+                  isDisable ? "cursor-not-allowed" : ""
+                }`}
+              >
                 Pay now
               </span>
             )}

@@ -10,7 +10,6 @@ import { getStrDate, getStrMonthYearDate } from "../../utils/helper";
 const EmployeeCard = ({ employee = {}, ...props }) => {
   const { name, email, designation, verified, salary, verifiedEmail, create } =
     employee;
-  console.log("verified ", verified);
 
   return (
     <div className="grid grid-cols-1 gap-4">

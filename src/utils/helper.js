@@ -58,6 +58,15 @@ export const getStrMonthYearDate = (date) => {
   return dateFormat(date, "mmm-yyyy");
 };
 
+/**
+ *
+ * @param {Date} date
+ * @returns "mm-yyyy" 01-2024
+ */
+export const getDateMonthYear = (date) => {
+  return dateFormat(date, "mm-yyyy");
+};
+
 export const onNotify = (title) => {
   return toast(title, {
     position: "top-right",

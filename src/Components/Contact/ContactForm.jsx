@@ -5,25 +5,25 @@
 
 import React, { useEffect } from "react";
 
-import { onNotify } from "../../utils/helper";
+import { onNotify, onNotifyError, onNotifySuccess } from "../../utils/helper";
 import { Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
-// import {
-//   isEmptyOrNull,
-//   onNotify,
-//   onNotifyError,
-//   onNotifySuccess,
-// } from "../../utils/helper";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const ContactForm = ({ initValues }) => {
   const [form] = Form.useForm();
+  const axiosPublic = useAxiosPublic();
 
   const onSubmit = (values) => {
     onNotify("Yor message is sending...");
-    getSendContactMessage(values)
+    console.log("Contact Us ", values);
+
+    axiosPublic
+      .post(`/contact-us`, values)
       .then((resp) => {
-        if (resp.status) {
-          onNotifySuccess(resp.message);
+        console.log("Contact Message Response ", resp);
+        if (resp.data.status) {
+          onNotifySuccess(resp.data.message);
         }
       })
       .catch((error) => {

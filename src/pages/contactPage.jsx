@@ -1,17 +1,18 @@
 import React from "react";
 import ContactForm from "../Components/Contact/ContactForm";
 import { Helmet } from "react-helmet";
+import EsHeaderTitle from "../Components/Utils/EsHeaderTitle";
 
 const ContactPage = () => {
   return (
     <div className="container mx-auto">
-      <Helmet>
-        <title>|Contact Us</title>
-      </Helmet>
+      <EsHeaderTitle page="Contact Us" />
       <div className="grid grid-cols-2 xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 my-14 gap-6">
         <div className="flex flex-col justify-center gap-5">
           <h2 className="text-5xl my-2">Contact</h2>
-          <h3 className="text-2xl font-semibold">We're here to help you find the talent you need</h3>
+          <h3 className="text-2xl font-semibold">
+            We're here to help you find the talent you need
+          </h3>
           <p>
             Whether you’re looking for remote architecture and engineering
             professionals or have questions about how BetterPros can meet your

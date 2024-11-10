@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   FileUnknownOutlined,
   FileAddOutlined,
@@ -13,6 +13,10 @@ import {
 import { Outlet, NavLink } from "react-router-dom";
 
 import { Button, Menu } from "antd";
+import { AuthContext } from "../../Context/AuthProvider";
+import localStore from "../../utils/localStore";
+import { isEmptyOrNull } from "../../utils/helper";
+import useAuth from "../../hooks/useAuth";
 
 const items = [
   {
@@ -58,19 +62,12 @@ const items = [
   {
     key: "user",
     icon: <i className="fa-solid fa-user-tie"></i>,
-    label: "User",
+    label: "Employee",
     children: [
       {
         key: "employees",
         icon: <i className="fa-solid fa-users"></i>,
         label: <NavLink to="/administrator/employee-list">Employees</NavLink>,
-      },
-      {
-        key: "all-employee",
-        icon: <i className="fa-solid fa-users"></i>,
-        label: (
-          <NavLink to="/administrator/all-employee-list">All Employee</NavLink>
-        ),
       },
     ],
   },
@@ -101,6 +98,56 @@ const DashboardMenu = () => {
     setCollapsed(!collapsed);
   };
 
+  const [menuItems, setMenuItems] = useState(items);
+  const { user, role } = useAuth();
+
+  useEffect(() => {
+    console.log("User Aut Role, ", role);
+    let userItems = [];
+    if (items) {
+      if ("Admin") {
+        userItems = [
+          {
+            key: "employees",
+            icon: <i className="fa-solid fa-users"></i>,
+            label: (
+              <NavLink to="/administrator/employee-list">Employees</NavLink>
+            ),
+          },
+          {
+            key: "all-employee",
+            icon: <i className="fa-solid fa-users"></i>,
+            label: (
+              <NavLink to="/administrator/all-employee-list">
+                All Employee
+              </NavLink>
+            ),
+          },
+        ];
+      } else {
+        userItems = [
+          {
+            key: "employees",
+            icon: <i className="fa-solid fa-users"></i>,
+            label: (
+              <NavLink to="/administrator/employee-list">Employees</NavLink>
+            ),
+          },
+        ];
+      }
+
+      for (let index = 0; index < items.length; index++) {
+        if (!isEmptyOrNull(items[index])) {
+          if (items[index].key === "user") {
+            items[index].children = userItems;
+          }
+        }
+      }
+
+      setMenuItems(items);
+    }
+  }, [role]);
+
   return (
     <div className="py-6 px-2 text-2xl font-semibold w-full">
       <Button
@@ -117,7 +164,7 @@ const DashboardMenu = () => {
         defaultOpenKeys={["users"]}
         mode="inline"
         inlineCollapsed={collapsed}
-        items={items}
+        items={menuItems}
       />
     </div>
   );

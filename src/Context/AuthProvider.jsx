@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { createContext, useEffect, useState } from "react";
-
+import { jwtDecode } from "jwt-decode";
 import {
   createUserWithEmailAndPassword,
   getAdditionalUserInfo,
@@ -27,9 +27,10 @@ import {
 } from "../utils/apiAction";
 import localStore from "../utils/localStore";
 
-export const AuthContext = createContext(null);
+export const AuthContext = createContext({});
 const AuthProvider = ({ children, ...props }) => {
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const auth = getAuth(fireBaseApp);
@@ -168,7 +169,14 @@ const AuthProvider = ({ children, ...props }) => {
       setIsLoading(false);
       const userEmail = currentUser?.email || user?.email;
       if (!isEmptyOrNull(currentUser)) {
-        getAccessToken(userEmail);
+        getAccessToken(userEmail).then((tokenData) => {
+          if (!isEmptyOrNull(tokenData.response)) {
+            const decode = jwtDecode(tokenData.response.substring(7));
+            setRole(decode.role);
+          } else {
+            signOut();
+          }
+        });
       } else {
         console.log("User Not Found");
         setUser(null);
@@ -181,6 +189,7 @@ const AuthProvider = ({ children, ...props }) => {
     };
   }, []);
   const authInf = {
+    role,
     user,
     logOut,
     createUser,

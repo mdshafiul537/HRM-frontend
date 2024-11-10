@@ -4,13 +4,13 @@ import useAxiosSecure from "./useAxiosSecure";
 
 const initialData = {};
 
-const useUser = (query = "") => {
+const useContactUs = () => {
   const axiosSecure = useAxiosSecure();
   const { data, refetch, isLoading } = useQuery({
     initialData,
-    queryKey: ["users"],
+    queryKey: ["contactus"],
     queryFn: async () => {
-      const resp = await axiosSecure.get(`/users${query}`);
+      const resp = await axiosSecure.get(`/contact-us`);
 
       return resp.data;
     },
@@ -19,4 +19,4 @@ const useUser = (query = "") => {
   return [data, refetch, isLoading];
 };
 
-export default useUser;
+export default useContactUs;

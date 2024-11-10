@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <React.Fragment>
       <Helmet>
-        <title>Architecture | Home</title>
+        <title>Green Architecture | Home</title>
       </Helmet>
       <section className="container mx-auto">
         <HomeBanner />

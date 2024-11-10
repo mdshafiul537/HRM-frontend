@@ -117,13 +117,15 @@ export const employeeAdminCols = (onHROrFireAction) => {
           <div className=" text-white">
             {item.isFired ? (
               <span className="bg-orange-700 px-4 py-1 ">Fired</span>
-            ) : (
+            ) : item?.role !== "Admin" ? (
               <span
                 className="font-semibold cursor-pointer bg-red-600 hover:bg-red-800 px-4 py-1"
                 onClick={() => onHROrFireAction(item, true)}
               >
                 Fired Up{" "}
               </span>
+            ) : (
+              ""
             )}
           </div>
         );

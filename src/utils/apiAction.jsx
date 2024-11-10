@@ -153,6 +153,14 @@ export const addTaskAction = async (task) => {
   return resp.data;
 };
 
+export const markReadMessageAction = async (contactReq) => {
+  const axiosSecure = useAxiosSecure();
+
+  const resp = await axiosSecure.put(`/contact-us`, contactReq);
+
+  return resp.data;
+};
+
 export const getAllTask = async () => {
   try {
     const axiosSecure = useAxiosSecure();

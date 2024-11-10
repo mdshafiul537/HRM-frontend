@@ -45,6 +45,10 @@ const router = createBrowserRouter([
         errorElement: <DashboardError404Page />,
         children: [
           {
+            path: "/administrator/",
+            element: <WorkSheetPage />,
+          },
+          {
             path: "/administrator/work-sheet",
             element: <WorkSheetPage />,
           },

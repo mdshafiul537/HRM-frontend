@@ -8,7 +8,7 @@ import LoadingContent from "../Components/Utils/LoadingContent";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AdminUsersPage = () => {
-  const [respUser, refetch, isLoading] = useUser();
+  const [respUser, refetch, isLoading] = useUser("?status=all");
   const [employees, setEmployees] = useState([]);
   const axiosSecure = useAxiosSecure();
   useEffect(() => {

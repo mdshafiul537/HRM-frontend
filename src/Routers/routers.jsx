@@ -25,6 +25,7 @@ import AdminUserPage from "../pages/adminUserPage";
 import PaidComplete from "../pages/paidComplete";
 import PrivateAccess from "./PrivateAccess";
 import ContactPage from "../pages/contactPage";
+import DashboardIndexPage from "../pages/dashboardIndexPage";
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/administrator/",
-            element: <WorkSheetPage />,
+            element: <DashboardIndexPage />,
           },
           {
             path: "/administrator/work-sheet",

@@ -1,7 +1,14 @@
 import { Modal } from "antd";
 import React from "react";
 
-const EsModal = ({ title, isOpen, onCancel, children, ...props }) => {
+const EsModal = ({
+  width = `90%`,
+  title,
+  isOpen,
+  onCancel,
+  children,
+  ...props
+}) => {
   return (
     <>
       <Modal
@@ -9,7 +16,7 @@ const EsModal = ({ title, isOpen, onCancel, children, ...props }) => {
         centered
         open={isOpen}
         onCancel={() => onCancel(false)}
-        width={`90%`}
+        width={width}
         footer={""}
       >
         {children}

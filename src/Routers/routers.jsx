@@ -23,6 +23,7 @@ import {
 import { LoginPage } from "../pages/login";
 import AdminUserPage from "../pages/adminUserPage";
 import PaidComplete from "../pages/paidComplete";
+import PrivateAccess from "./PrivateAccess";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       {
         path: "/administrator",
-        element: <DashboardPage />,
+        element: (
+          <PrivateAccess>
+            <DashboardPage />
+          </PrivateAccess>
+        ),
         errorElement: <DashboardError404Page />,
         children: [
           {

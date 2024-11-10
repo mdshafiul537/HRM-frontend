@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { ThemeContext } from "../../Context/ThemeProvider";
-
+import { AuthContext } from "../../Context/AuthProvider";
 import {
   AppstoreAddOutlined,
   AppstoreOutlined,
@@ -14,9 +14,22 @@ import { Menu, Col, Row, Layout } from "antd";
 const { Header } = Layout;
 
 const HRHeader = () => {
+  const location = useLocation();
+  const [menuItems, setMenuItems] = useState([]);
+  const { user, isLoading, logOut } = useContext(AuthContext);
+
   const { isDark, onThemeChange } = useContext(ThemeContext);
 
   const [current, setCurrent] = useState("home");
+
+  useEffect(() => {
+    console.log("User Log Out location,", location);
+    console.log("User Log Out, ", user);
+  }, [user]);
+
+  const onLogOutAction = (e) => {
+    logOut();
+  };
   const onMenuClick = (e) => {
     setCurrent(e.key);
   };
@@ -46,7 +59,15 @@ const HRHeader = () => {
     },
     {
       key: "Login",
-      label: <NavLink to="/login">Login</NavLink>,
+      label: (
+        <>
+          {!user ? (
+            <NavLink to="/login">Login</NavLink>
+          ) : (
+            <span onClick={onLogOutAction}>Logout</span>
+          )}
+        </>
+      ),
     },
   ];
 

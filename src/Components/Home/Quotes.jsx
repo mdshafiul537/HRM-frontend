@@ -18,7 +18,7 @@ const Quotes = () => {
           <Quote
             name="Marcor Platt"
             designation="Expert Network PLLC"
-            quote={`“I told my needs and they quickly found three candidates to interview. The professional I selected turned out to be knowledgeable, responsive, and experienced. I was frankly overwhelmed, and now I feel grateful. `}
+            quote={`“I told my needs and they quickly found three candidates to interview. The professional I selected turned out to be knowledgeable, responsive, and experienced. I was frankly overwhelmed, and now I feel grateful.`}
             profileUrl="https://i.ibb.co.com/6rw37kd/agent-3.jpg"
           />
         </div>
@@ -27,7 +27,7 @@ const Quotes = () => {
           <Quote
             name="Nilcolas Catellier"
             designation="CEO, BIM Pure"
-            quote={`“The team quickly delivered a list of high-quality candidates. The interview process is made simple and way more efficient compared to trying to find freelancers individually. `}
+            quote={`“The team quickly delivered a list of high-quality candidates. The interview process is made simple and way more efficient compared to trying to find freelancers individually.`}
             profileUrl="https://i.ibb.co.com/80FGpJP/agent-1.jpg"
           />
         </div>

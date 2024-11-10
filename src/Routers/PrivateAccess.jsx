@@ -1,16 +1,18 @@
 import React, { useContext } from "react";
 
 import { useLocation, Navigate } from "react-router-dom";
-import { AuthContext } from "../../Context/AuthProvider";
-import Loading from "../Utils/Loading";
-import { isEmptyOrNull } from "../../utils/helper";
+import { AuthContext } from "../Context/AuthProvider";
+import LoadingContent from "../Components/Utils/LoadingContent";
+import { isEmptyOrNull } from "../utils/helper";
+
+
 
 const PrivateAccess = ({ children }) => {
   const { user, isLoading } = useContext(AuthContext);
 
   const location = useLocation();
   if (isLoading) {
-    return <Loading isLoading={isLoading} />;
+    return <LoadingContent isLoading={isLoading} />;
   }
 
   if (!isEmptyOrNull(user)) {

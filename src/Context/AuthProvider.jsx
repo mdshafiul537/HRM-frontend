@@ -171,6 +171,7 @@ const AuthProvider = ({ children, ...props }) => {
         getAccessToken(userEmail);
       } else {
         console.log("User Not Found");
+        setUser(null);
         localStore.removeToken();
       }
     });

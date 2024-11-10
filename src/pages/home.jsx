@@ -2,6 +2,7 @@ import React from "react";
 import HomeBanner from "../Components/Home/HomeBanner";
 import { Helmet } from "react-helmet";
 import ContactForm from "../Components/Contact/ContactForm";
+import FeatureSection from "../Components/Home/FeatureSection";
 
 const HomePage = () => {
   return (

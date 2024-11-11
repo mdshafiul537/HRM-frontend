@@ -1,4 +1,4 @@
-import { Card, Col, Row, Table } from "antd";
+import { Badge, Card, Col, Row, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { contactCols } from "../../utils/cols/contactCols";
 import useContactUs from "../../hooks/useContact";
@@ -11,6 +11,7 @@ import {
 import EsModal from "../Utils/EsModal";
 import ContactMessageCard from "./ContactMessageCard";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import CountMessage from "./CountMessage";
 
 const DashBoardCards = () => {
   const [contactsResp, refreshContact, isContactLoading] = useContactUs();
@@ -18,8 +19,17 @@ const DashBoardCards = () => {
   const axiosSecure = useAxiosSecure();
 
   const [contacts, setContacts] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [openMessage, setOpenMessage] = useState({});
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    axiosSecure.get(`/contact-us/count?read=false`).then((resp) => {
+      if (resp.data.status) {
+        setUnreadCount(resp.data.response);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (!isEmptyOrNull(contactsResp)) {
@@ -71,7 +81,7 @@ const DashBoardCards = () => {
       </EsModal>
 
       <Col md={24}>
-        <Card title="Messages">
+        <Card title="Messages" extra={<CountMessage count={unreadCount} />}>
           <Table
             dataSource={contacts}
             columns={contactCols({

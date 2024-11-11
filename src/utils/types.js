@@ -1,5 +1,6 @@
 export const REQUEST_HEADER_SECURE = {
-  "Access-Control-Allow-Origin": "http://localhost:3052",
+  "Access-Control-Allow-Origin":
+    "[*, https://hrm-backend-g6rjcx28m-md-shafiul-islams-projects.vercel.app]",
   "Access-Control-Allow-Methods": "PUT, POST, GET, DELETE, PATCH, OPTIONS",
   "Access-Control-Allow-Headers": "Origin, Content-Type, Accept",
   Authorization: "",
